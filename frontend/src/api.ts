@@ -10,6 +10,7 @@ import {
   VillageRiskSummary,
   BacktestComparison,
   SystemHealth,
+  PinPointLiveResult,
 } from "./types";
 
 const API_BASE = "http://127.0.0.1:8000";
@@ -88,5 +89,11 @@ export async function fetchBacktest(): Promise<BacktestComparison> {
 export async function fetchSituationReport(): Promise<any> {
   const res = await fetch(`${API_BASE}/reports`);
   if (!res.ok) throw new Error(`Failed to fetch situation report: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchLivePinpoint(lat: number, lon: number): Promise<PinPointLiveResult> {
+  const res = await fetch(`${API_BASE}/risk/point/live?lat=${lat}&lon=${lon}`);
+  if (!res.ok) throw new Error(`Failed to fetch live pinpoint prediction: ${res.statusText}`);
   return res.json();
 }

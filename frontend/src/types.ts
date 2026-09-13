@@ -148,3 +148,45 @@ export interface SystemHealth {
     last_processed: string | null;
   };
 }
+
+export interface FalseAlarmMitigation {
+  suppressed: boolean;
+  status_message: string;
+  confidence_score_pct: number;
+  false_alarm_risk_pct: number;
+}
+
+export interface CaineThresholdInfo {
+  critical_intensity_mm_hr: number;
+  intensity_ratio: number;
+  status: string;
+  estimated_lead_time_hours: number;
+}
+
+export interface PinPointLiveResult {
+  latitude: number;
+  longitude: number;
+  elevation_m: number;
+  slope_deg: number;
+  aspect_deg: number;
+  rainfall_24h_mm: number;
+  rainfall_3d_mm: number;
+  rainfall_15d_mm: number;
+  current_intensity_mm_hr: number;
+  soil_saturation_proxy: number;
+  soil_saturation_pct: number;
+  landslide_risk: number;
+  flash_flood_risk: number;
+  risk_class: RiskLevel;
+  alert_state: AlertState;
+  caine_threshold: CaineThresholdInfo;
+  false_alarm_mitigation: FalseAlarmMitigation;
+  dominant_factor: string;
+  data_provenance: {
+    terrain: string;
+    rainfall: string;
+    terrain_source: string;
+    rainfall_source: string;
+    fetched_at: string;
+  };
+}

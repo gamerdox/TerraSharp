@@ -15,6 +15,8 @@ interface MapViewerProps {
   onMapClick: (lat: number, lon: number) => void;
   onSelectVillage: (village: VillageRiskSummary) => void;
   selectedVillage: VillageRiskSummary | null;
+  pinnedLocation?: { lat: number; lon: number } | null;
+  onPinLocation?: (lat: number, lon: number) => void;
 }
 
 export const MapViewer: React.FC<MapViewerProps> = ({
@@ -29,6 +31,8 @@ export const MapViewer: React.FC<MapViewerProps> = ({
   onMapClick,
   onSelectVillage,
   selectedVillage,
+  pinnedLocation,
+  onPinLocation,
 }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
@@ -37,6 +41,10 @@ export const MapViewer: React.FC<MapViewerProps> = ({
   const gridLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
   const villageLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
   const glcLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
+  const pinnedLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
+
+  // Search / jump coordinate input state
+  const [coordInput, setCoordInput] = useState<string>("");
 
   // Basemap options: dark (Esri Dark Canvas), satellite (Esri World Imagery), osm (OpenStreetMap)
   const [basemap, setBasemap] = useState<"dark" | "satellite" | "osm">("dark");
@@ -78,9 +86,13 @@ export const MapViewer: React.FC<MapViewerProps> = ({
       gridLayerGroupRef.current.addTo(map);
       villageLayerGroupRef.current.addTo(map);
       glcLayerGroupRef.current.addTo(map);
+      pinnedLayerGroupRef.current.addTo(map);
 
       map.on("click", (e: L.LeafletMouseEvent) => {
         onMapClick(e.latlng.lat, e.latlng.lng);
+        if (onPinLocation) {
+          onPinLocation(e.latlng.lat, e.latlng.lng);
+        }
       });
 
       mapInstanceRef.current = map;
@@ -278,6 +290,59 @@ export const MapViewer: React.FC<MapViewerProps> = ({
     });
   }, [showGlcMarkers, glcEvents]);
 
+  // Render Pinned Location Marker
+  useEffect(() => {
+    const group = pinnedLayerGroupRef.current;
+    group.clearLayers();
+
+    if (!pinnedLocation) return;
+
+    const pinIcon = L.divIcon({
+      className: "custom-pinned-marker",
+      html: `
+        <div style="position:relative; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
+          <span style="position:absolute; width:34px; height:34px; border-radius:50%; background:rgba(244,63,94,0.45); animation:ping 1.4s cubic-bezier(0,0,0.2,1) infinite;"></span>
+          <span style="position:relative; width:16px; height:16px; border-radius:50%; background:#f43f5e; border:2px solid white; box-shadow:0 0 14px rgba(244,63,94,0.9);"></span>
+        </div>
+      `,
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
+    });
+
+    const marker = L.marker([pinnedLocation.lat, pinnedLocation.lon], { icon: pinIcon });
+    marker.bindTooltip(
+      `<div style="font-size:12px; font-weight:bold;">
+        📍 PINNED: ${pinnedLocation.lat.toFixed(4)}°, ${pinnedLocation.lon.toFixed(4)}°
+      </div>`,
+      { permanent: false, direction: "top", offset: [0, -12] }
+    );
+    group.addLayer(marker);
+  }, [pinnedLocation]);
+
+  const handleJumpToCoord = () => {
+    if (!coordInput.trim()) return;
+    const parts = coordInput.split(/[\s,]+/).map((s) => parseFloat(s.trim()));
+    if (parts.length >= 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+      const [lat, lon] = parts;
+      if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.flyTo([lat, lon], 12, { animate: true });
+        }
+        if (onPinLocation) onPinLocation(lat, lon);
+        onMapClick(lat, lon);
+      }
+    }
+  };
+
+  const jumpPreset = (lat: number, lon: number) => {
+    setCoordInput(`${lat.toFixed(4)}, ${lon.toFixed(4)}`);
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.flyTo([lat, lon], 12, { animate: true });
+    }
+    if (onPinLocation) onPinLocation(lat, lon);
+    onMapClick(lat, lon);
+  };
+
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", minHeight: "450px" }}>
       {/* Map Container */}
@@ -292,6 +357,94 @@ export const MapViewer: React.FC<MapViewerProps> = ({
           border: "1px solid var(--border-color)",
         }}
       />
+
+      {/* Search & Coordinate Jump Toolbar (Top Left) */}
+      <div
+        style={{
+          position: "absolute",
+          top: "12px",
+          left: "12px",
+          zIndex: 1000,
+          backgroundColor: "rgba(15, 23, 42, 0.90)",
+          backdropFilter: "blur(6px)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+          padding: "6px 10px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "6px",
+          boxShadow: "0 6px 16px rgba(0, 0, 0, 0.4)",
+          maxWidth: "340px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <input
+            type="text"
+            placeholder="Pin Lat, Lon (e.g. 10.08, 77.06)"
+            value={coordInput}
+            onChange={(e) => setCoordInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleJumpToCoord();
+            }}
+            style={{
+              padding: "4px 8px",
+              fontSize: "11px",
+              borderRadius: "4px",
+              border: "1px solid #334155",
+              backgroundColor: "#0f172a",
+              color: "#f8fafc",
+              outline: "none",
+              width: "190px",
+              fontFamily: "monospace",
+            }}
+          />
+          <button
+            onClick={handleJumpToCoord}
+            style={{
+              padding: "4px 10px",
+              fontSize: "11px",
+              fontWeight: "600",
+              borderRadius: "4px",
+              border: "none",
+              cursor: "pointer",
+              backgroundColor: "#f43f5e",
+              color: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+            }}
+            title="Pin location and predict"
+          >
+            📍 Pin
+          </button>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "4px", flexWrap: "wrap" }}>
+          <span style={{ fontSize: "10px", color: "var(--text-secondary)" }}>Quick:</span>
+          {[
+            { name: "Wayanad", lat: 11.55, lon: 76.15 },
+            { name: "Chamoli", lat: 30.45, lon: 79.45 },
+            { name: "Munnar", lat: 10.08, lon: 77.06 },
+            { name: "Shimla", lat: 31.10, lon: 77.17 },
+            { name: "Delhi", lat: 28.61, lon: 77.20 },
+          ].map((preset) => (
+            <button
+              key={preset.name}
+              onClick={() => jumpPreset(preset.lat, preset.lon)}
+              style={{
+                padding: "2px 6px",
+                fontSize: "10px",
+                borderRadius: "3px",
+                border: "1px solid #334155",
+                backgroundColor: "rgba(30, 41, 59, 0.7)",
+                color: "#94a3b8",
+                cursor: "pointer",
+              }}
+            >
+              {preset.name}
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* Floating Basemap Selector (Top Right) */}
       <div

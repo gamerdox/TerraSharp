@@ -30,10 +30,10 @@ logger = logging.getLogger("sh304")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Prime pipeline state upon startup with default AOI in demo mode
-    logger.info(f"Initializing SH-304 Early Warning System in {settings.mode.upper()} mode...")
+    # Prime pipeline state upon startup instantly
+    logger.info("Initializing SH-304 Early Warning System...")
     try:
-        orchestrator = PipelineOrchestrator()
+        orchestrator = PipelineOrchestrator(mode="demo")
         orchestrator.run(settings.default_aoi)
         logger.info(f"Default AOI '{settings.default_aoi}' primed successfully.")
     except Exception as e:

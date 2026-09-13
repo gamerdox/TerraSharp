@@ -162,3 +162,39 @@ class SystemHealthDataStatus(BaseModel):
     glc_loaded: bool
     villages_loaded: bool
     mode: str
+
+
+class FalseAlarmMitigation(BaseModel):
+    suppressed: bool
+    status_message: str
+    confidence_score_pct: float
+    false_alarm_risk_pct: float
+
+
+class CaineThresholdInfo(BaseModel):
+    critical_intensity_mm_hr: float
+    intensity_ratio: float
+    status: str
+    estimated_lead_time_hours: float
+
+
+class PinPointLiveResponse(BaseModel):
+    latitude: float
+    longitude: float
+    elevation_m: float
+    slope_deg: float
+    aspect_deg: float
+    rainfall_24h_mm: float
+    rainfall_3d_mm: float
+    rainfall_15d_mm: float
+    current_intensity_mm_hr: float
+    soil_saturation_proxy: float
+    soil_saturation_pct: float
+    landslide_risk: float
+    flash_flood_risk: float
+    risk_class: RiskLevel
+    alert_state: AlertState
+    caine_threshold: CaineThresholdInfo
+    false_alarm_mitigation: FalseAlarmMitigation
+    dominant_factor: str
+    data_provenance: Dict[str, Any]

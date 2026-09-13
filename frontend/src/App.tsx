@@ -8,6 +8,7 @@ import {
   VillageRiskSummary,
   BacktestComparison,
   SystemHealth,
+  PinPointLiveResult,
 } from "./types";
 import {
   fetchHealth,
@@ -16,6 +17,7 @@ import {
   triggerPipeline,
   fetchRiskGrid,
   fetchPointRisk,
+  fetchLivePinpoint,
   fetchLeadTime,
   fetchAlerts,
   fetchVillages,
@@ -32,6 +34,7 @@ import { AlertsTable } from "./components/AlertsTable";
 import { BacktestModal } from "./components/BacktestModal";
 import { ProvenancePanel } from "./components/ProvenancePanel";
 import { ExportReportModal } from "./components/ExportReportModal";
+import { PinnedPointInspector } from "./components/PinnedPointInspector";
 
 export const App: React.FC = () => {
   // Application Data States
@@ -53,6 +56,11 @@ export const App: React.FC = () => {
   const [activeLayer, setActiveLayer] = useState<ActiveRasterLayer>("landslide");
   const [showVillages, setShowVillages] = useState<boolean>(true);
   const [showGlcMarkers, setShowGlcMarkers] = useState<boolean>(true);
+
+  // Pin-Anywhere Live Prediction States
+  const [pinnedLocation, setPinnedLocation] = useState<{ lat: number; lon: number } | null>(null);
+  const [pinnedData, setPinnedData] = useState<PinPointLiveResult | null>(null);
+  const [pinnedLoading, setPinnedLoading] = useState<boolean>(false);
 
   // Modals
   const [showBacktestModal, setShowBacktestModal] = useState<boolean>(false);
@@ -153,14 +161,30 @@ export const App: React.FC = () => {
     }
   };
 
-  // Map Click -> Explainable Point Risk
+  // Map Click -> Explainable Point Risk & Live Prediction Pin
   const handleMapClick = async (lat: number, lon: number) => {
+    handlePinLocation(lat, lon);
     try {
       const pt = await fetchPointRisk(lat, lon);
       setSelectedPoint(pt);
       setSelectedVillage(null);
     } catch (err) {
       console.warn("Click outside grid bounds or query error:", err);
+    }
+  };
+
+  // Pin Location -> Live Real-Time Multi-Factor Evaluation
+  const handlePinLocation = async (lat: number, lon: number) => {
+    setPinnedLocation({ lat, lon });
+    setPinnedLoading(true);
+    try {
+      const res = await fetchLivePinpoint(lat, lon);
+      setPinnedData(res);
+    } catch (err: any) {
+      console.error("Failed to evaluate live pinpoint:", err);
+      setErrorMsg("Failed to query live metrics for pinned location.");
+    } finally {
+      setPinnedLoading(false);
     }
   };
 
@@ -215,8 +239,8 @@ export const App: React.FC = () => {
         flex: 1,
       }}>
         {/* Left: Map & Legend */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%" }}>
-          <div style={{ flex: 1, minHeight: "480px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px", height: "100%", position: "relative" }}>
+          <div style={{ flex: 1, minHeight: "480px", position: "relative" }}>
             <MapViewer
               center={center}
               zoom={zoom}
@@ -229,6 +253,18 @@ export const App: React.FC = () => {
               onMapClick={handleMapClick}
               onSelectVillage={handleSelectVillage}
               selectedVillage={selectedVillage}
+              pinnedLocation={pinnedLocation}
+              onPinLocation={handlePinLocation}
+            />
+
+            {/* Live Pinpoint Inspector Floating Overlay */}
+            <PinnedPointInspector
+              data={pinnedData}
+              loading={pinnedLoading}
+              onClose={() => {
+                setPinnedData(null);
+                setPinnedLocation(null);
+              }}
             />
           </div>
 
