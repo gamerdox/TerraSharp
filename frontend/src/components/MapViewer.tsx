@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import L from "leaflet";
-import { GridCell, VillageRiskSummary, PointRiskDetail } from "../types";
+import { GridCell, VillageRiskSummary } from "../types";
 import { ActiveRasterLayer } from "./RiskLegend";
 
 interface MapViewerProps {
@@ -33,9 +33,13 @@ export const MapViewer: React.FC<MapViewerProps> = ({
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
+  const baseLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
   const gridLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
   const villageLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
   const glcLayerGroupRef = useRef<L.LayerGroup>(L.layerGroup());
+
+  // Basemap options: dark (Esri Dark Canvas), satellite (Esri World Imagery), osm (OpenStreetMap)
+  const [basemap, setBasemap] = useState<"dark" | "satellite" | "osm">("dark");
 
   // Helper for color scale based on value [0, 1]
   const getColorForVal = (val: number): string => {
@@ -70,12 +74,7 @@ export const MapViewer: React.FC<MapViewerProps> = ({
 
       L.control.zoom({ position: "bottomright" }).addTo(map);
 
-      // Clean dark CartoDB basemap
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; OpenStreetMap',
-        maxZoom: 19,
-      }).addTo(map);
-
+      baseLayerGroupRef.current.addTo(map);
       gridLayerGroupRef.current.addTo(map);
       villageLayerGroupRef.current.addTo(map);
       glcLayerGroupRef.current.addTo(map);
@@ -86,10 +85,6 @@ export const MapViewer: React.FC<MapViewerProps> = ({
 
       mapInstanceRef.current = map;
     }
-
-    return () => {
-      // clean-up if unmounted
-    };
   }, []);
 
   // Update center & zoom when AOI changes
@@ -98,6 +93,48 @@ export const MapViewer: React.FC<MapViewerProps> = ({
       mapInstanceRef.current.setView([center.lat, center.lon], zoom, { animate: true });
     }
   }, [center.lat, center.lon, zoom]);
+
+  // Update Basemap Tiles (100% Free, NO API Key, NO Watermarks)
+  useEffect(() => {
+    const group = baseLayerGroupRef.current;
+    group.clearLayers();
+
+    if (basemap === "satellite") {
+      // Esri World Imagery (High-Res Satellite)
+      const satLayer = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS",
+          maxZoom: 19,
+        }
+      );
+      group.addLayer(satLayer);
+    } else if (basemap === "osm") {
+      // Standard OpenStreetMap
+      const osmLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      });
+      group.addLayer(osmLayer);
+    } else {
+      // Esri World Dark Gray Canvas (Sleek dark theme, zero watermark, zero key required)
+      const darkBase = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
+          maxZoom: 16,
+        }
+      );
+      const darkRef = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+        {
+          maxZoom: 16,
+        }
+      );
+      group.addLayer(darkBase);
+      group.addLayer(darkRef);
+    }
+  }, [basemap]);
 
   // Render Grid Cells Heatmap
   useEffect(() => {
@@ -242,16 +279,86 @@ export const MapViewer: React.FC<MapViewerProps> = ({
   }, [showGlcMarkers, glcEvents]);
 
   return (
-    <div
-      ref={mapContainerRef}
-      style={{
-        width: "100%",
-        height: "100%",
-        minHeight: "450px",
-        borderRadius: "8px",
-        overflow: "hidden",
-        border: "1px solid var(--border-color)",
-      }}
-    />
+    <div style={{ position: "relative", width: "100%", height: "100%", minHeight: "450px" }}>
+      {/* Map Container */}
+      <div
+        ref={mapContainerRef}
+        style={{
+          width: "100%",
+          height: "100%",
+          minHeight: "450px",
+          borderRadius: "8px",
+          overflow: "hidden",
+          border: "1px solid var(--border-color)",
+        }}
+      />
+
+      {/* Floating Basemap Selector (Top Right) */}
+      <div
+        style={{
+          position: "absolute",
+          top: "12px",
+          right: "12px",
+          zIndex: 1000,
+          backgroundColor: "rgba(15, 23, 42, 0.85)",
+          backdropFilter: "blur(4px)",
+          border: "1px solid var(--border-color)",
+          borderRadius: "6px",
+          padding: "4px",
+          display: "flex",
+          gap: "4px",
+          boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.4)",
+        }}
+      >
+        <button
+          onClick={() => setBasemap("dark")}
+          style={{
+            padding: "4px 8px",
+            fontSize: "11px",
+            fontWeight: "600",
+            borderRadius: "4px",
+            border: "none",
+            cursor: "pointer",
+            backgroundColor: basemap === "dark" ? "#2563eb" : "transparent",
+            color: basemap === "dark" ? "#ffffff" : "var(--text-secondary)",
+          }}
+          title="Dark Canvas (No Key Required)"
+        >
+          🌙 Dark
+        </button>
+        <button
+          onClick={() => setBasemap("satellite")}
+          style={{
+            padding: "4px 8px",
+            fontSize: "11px",
+            fontWeight: "600",
+            borderRadius: "4px",
+            border: "none",
+            cursor: "pointer",
+            backgroundColor: basemap === "satellite" ? "#2563eb" : "transparent",
+            color: basemap === "satellite" ? "#ffffff" : "var(--text-secondary)",
+          }}
+          title="Esri Satellite Imagery (No Key Required)"
+        >
+          🛰️ Satellite
+        </button>
+        <button
+          onClick={() => setBasemap("osm")}
+          style={{
+            padding: "4px 8px",
+            fontSize: "11px",
+            fontWeight: "600",
+            borderRadius: "4px",
+            border: "none",
+            cursor: "pointer",
+            backgroundColor: basemap === "osm" ? "#2563eb" : "transparent",
+            color: basemap === "osm" ? "#ffffff" : "var(--text-secondary)",
+          }}
+          title="OpenStreetMap Streets (No Key Required)"
+        >
+          🗺️ Streets
+        </button>
+      </div>
+    </div>
   );
 };
