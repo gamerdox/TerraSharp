@@ -34,6 +34,7 @@ flowchart TD
 | **Implementation Status** | [`IMPLEMENTATION_STATUS.md`](../IMPLEMENTATION_STATUS.md) | 17-phase execution tracking log, files changed, verification tests, and remaining tasks. | Technical project managers, auditors |
 | **Original Implementation Plan** | [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) | Initial architectural design, technical specs, open questions, and approval record. | Technical reviewers |
 | **System Walkthrough Artifact** | [`WALKTHROUGH.md`](WALKTHROUGH.md) | Summary of all completed deliverables, test suite logs (19/19 pass), and model benchmarks. | Quality assurance, executive review |
+| **Explain Like I'm 5 (ELI5)** | [`EXPLAIN_LIKE_IM_5.md`](EXPLAIN_LIKE_IM_5.md) | Super-simple, fun explanation of the entire system, sandcastle analogy, 4 clues, and architecture. | Everyone, non-technical stakeholders, kids! |
 
 ---
 

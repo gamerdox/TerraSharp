@@ -142,4 +142,6 @@ For the full catalog, reading path, and topic breakdown, see **[Documentation Ma
 - **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md):** Continuously updated 17-phase completion log.
 - **[IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md):** Architectural specification and technical plan.
 - **[WALKTHROUGH.md](docs/WALKTHROUGH.md):** Summary of delivered deliverables, test logs, and validation results.
+- **[EXPLAIN_LIKE_IM_5.md](docs/EXPLAIN_LIKE_IM_5.md):** Plain-language explanation of the entire project using simple sandcastle analogies!
+
 
