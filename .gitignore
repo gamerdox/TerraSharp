@@ -53,3 +53,6 @@ Thumbs.db
 # Heavy raw cache (keep demo and processed)
 data/cache/*
 !data/cache/.gitkeep
+data/live/
+data/demo/aoi_custom_*/
+data/processed/aoi_custom_*/

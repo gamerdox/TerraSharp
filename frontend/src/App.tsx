@@ -198,9 +198,11 @@ export const App: React.FC = () => {
       setLoading(true);
       const res = await createAoiFromPin(lat, lon);
       const newAoiId = res.active_aoi;
-      setCurrentAoi(newAoiId);
       const aoiList = await fetchAOIs();
       setAois(aoiList);
+      setCurrentAoi(newAoiId);
+      setSelectedPoint(null);
+      setSelectedVillage(null);
       await refreshAllData();
       setPinnedData(null);
       setPinnedLocation(null);

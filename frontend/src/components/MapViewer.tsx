@@ -118,6 +118,15 @@ export const MapViewer: React.FC<MapViewerProps> = ({
         }
       );
       group.addLayer(satLayer);
+
+      // Add hybrid reference overlay for place names, borders, and roads
+      const satLabels = L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+        {
+          maxZoom: 19,
+        }
+      );
+      group.addLayer(satLabels);
     } else if (basemap === "osm") {
       // Standard OpenStreetMap
       const osmLayer = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {

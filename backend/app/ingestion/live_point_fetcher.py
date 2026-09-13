@@ -174,10 +174,11 @@ class LivePointFetcher:
 
             # Append recent days to form full 15-day series
             daily_sums.append(r24)
-            r15d = sum(daily_sums)
+            daily_series_15d = ([0.0] * (15 - len(daily_sums)) + daily_sums)[-15:]
+            r15d = sum(daily_series_15d)
 
             # AMI formula: sum_{k=0..14} R_k * (0.85)^k (reversed from today back)
-            rev_sums = list(reversed(daily_sums))
+            rev_sums = list(reversed(daily_series_15d))
             ami = sum(day_rain * (0.85**k) for k, day_rain in enumerate(rev_sums[:15]))
             soil_proxy = max(0.0, min(1.0, ami / 250.0))
             rainfall_score = max(0.0, min(1.0, r24 / 200.0))
@@ -192,6 +193,7 @@ class LivePointFetcher:
                 "rainfall_score": round(rainfall_score, 3),
                 "soil_proxy": round(soil_proxy, 3),
                 "ami_raw": round(ami, 2),
+                "daily_series_mm": [round(float(x), 2) for x in daily_series_15d],
                 "provenance": ProvenanceTag.OBSERVED.value,
                 "source": "ERA5 Reanalysis Archive + Global Meteorological Feeds",
             }
@@ -199,6 +201,7 @@ class LivePointFetcher:
             logger.warning(f"Rainfall failover failed: {err}. Using estimated precipitation.")
 
         # 3. Tertiary Fallback: Estimated precipitation
+        fallback_series = [1.0, 1.5, 2.0, 1.0, 3.0, 2.5, 4.0, 3.0, 2.0, 1.5, 2.0, 3.5, 4.0, 4.5, 5.0]
         return {
             "rainfall_24h_mm": 5.0,
             "rainfall_3d_mm": 15.0,
@@ -209,6 +212,7 @@ class LivePointFetcher:
             "rainfall_score": 0.025,
             "soil_proxy": 0.12,
             "ami_raw": 30.0,
+            "daily_series_mm": fallback_series,
             "provenance": ProvenanceTag.ESTIMATED.value,
             "source": "Interpolated Meteorological Estimate",
         }
@@ -244,6 +248,7 @@ class LivePointFetcher:
             "rainfall_score": round(rainfall_score, 3),
             "soil_proxy": round(soil_proxy, 3),
             "ami_raw": round(ami, 2),
+            "daily_series_mm": [round(float(x), 2) for x in reversed(daily_sums)],
             "provenance": ProvenanceTag.OBSERVED.value,
             "source": source_name,
         }
