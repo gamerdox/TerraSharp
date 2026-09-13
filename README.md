@@ -127,8 +127,11 @@ Evaluation against NASA Global Landslide Catalog (GLC) historical ground truth e
 
 ---
 
-## 6. Comprehensive Documentation Directory
+## 6. Complete Documentation Index
 
+For the full catalog, reading path, and topic breakdown, see **[Documentation Master Index (docs/INDEX.md)](docs/INDEX.md)**.
+
+- **[Master Index](docs/INDEX.md):** Complete catalog of all technical documents, guides, and specifications.
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md):** Architectural diagrams, data flow pipeline, and module boundaries.
 - **[DATA_SOURCES.md](docs/DATA_SOURCES.md):** Inventory of GPM IMERG, SRTM 30m, NASA GLC, Survey of India, and proxy disclosures.
 - **[METHODOLOGY.md](docs/METHODOLOGY.md):** Complete mathematical derivations, Horn slope, D8 routing, Caine threshold, and weights.
@@ -136,4 +139,7 @@ Evaluation against NASA Global Landslide Catalog (GLC) historical ground truth e
 - **[LIMITATIONS.md](docs/LIMITATIONS.md):** Explicit operational boundaries, lack of localized Indian calibration, and proxy caveats.
 - **[DEPLOYMENT.md](docs/DEPLOYMENT.md):** Setup commands, Docker containerization, and environment variables.
 - **[DEMO_GUIDE.md](docs/DEMO_GUIDE.md):** Interactive walkthrough for Wayanad and Chamoli disaster scenarios.
-- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md):** Continuously updated phase completion log.
+- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md):** Continuously updated 17-phase completion log.
+- **[IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md):** Architectural specification and technical plan.
+- **[WALKTHROUGH.md](docs/WALKTHROUGH.md):** Summary of delivered deliverables, test logs, and validation results.
+
