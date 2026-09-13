@@ -1,0 +1,233 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.52,
+              30.52
+            ],
+            [
+              79.6,
+              30.52
+            ],
+            [
+              79.6,
+              30.58
+            ],
+            [
+              79.52,
+              30.58
+            ],
+            [
+              79.52,
+              30.52
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_CHM_01",
+        "village_name": "Joshimath",
+        "district": "Chamoli",
+        "state": "Uttarakhand",
+        "population": 18000,
+        "source": "Survey of India / OpenStreetMap Reference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.57,
+              30.47
+            ],
+            [
+              79.64,
+              30.47
+            ],
+            [
+              79.64,
+              30.54
+            ],
+            [
+              79.57,
+              30.54
+            ],
+            [
+              79.57,
+              30.47
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_CHM_02",
+        "village_name": "Raini",
+        "district": "Chamoli",
+        "state": "Uttarakhand",
+        "population": 1200,
+        "source": "Survey of India / OpenStreetMap Reference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.58,
+              30.49
+            ],
+            [
+              79.65,
+              30.49
+            ],
+            [
+              79.65,
+              30.56
+            ],
+            [
+              79.58,
+              30.56
+            ],
+            [
+              79.58,
+              30.49
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_CHM_03",
+        "village_name": "Tapovan",
+        "district": "Chamoli",
+        "state": "Uttarakhand",
+        "population": 2400,
+        "source": "Survey of India / OpenStreetMap Reference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.2,
+              30.22
+            ],
+            [
+              79.28,
+              30.22
+            ],
+            [
+              79.28,
+              30.3
+            ],
+            [
+              79.2,
+              30.3
+            ],
+            [
+              79.2,
+              30.22
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_CHM_04",
+        "village_name": "Karnaprayag",
+        "district": "Chamoli",
+        "state": "Uttarakhand",
+        "population": 12500,
+        "source": "Survey of India / OpenStreetMap Reference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.28,
+              30.38
+            ],
+            [
+              79.36,
+              30.38
+            ],
+            [
+              79.36,
+              30.45
+            ],
+            [
+              79.28,
+              30.45
+            ],
+            [
+              79.28,
+              30.38
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_CHM_05",
+        "village_name": "Gopeshwar",
+        "district": "Chamoli",
+        "state": "Uttarakhand",
+        "population": 21000,
+        "source": "Survey of India / OpenStreetMap Reference"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              79.38,
+              30.4
+            ],
+            [
+              79.46,
+              30.4
+            ],
+            [
+              79.46,
+              30.47
+            ],
+            [
+              79.38,
+              30.47
+            ],
+            [
+              79.38,
+              30.4
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_CHM_06",
+        "village_name": "Pipalkoti",
+        "district": "Chamoli",
+        "state": "Uttarakhand",
+        "population": 7800,
+        "source": "Survey of India / OpenStreetMap Reference"
+      }
+    }
+  ]
+}

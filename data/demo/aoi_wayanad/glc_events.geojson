@@ -1,0 +1,131 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.12,
+          11.52
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_WAY_001",
+        "date": "2018-08-14",
+        "location": "Puthumala / Meppadi, Wayanad",
+        "trigger": "Continuous rain / Monsoon storm",
+        "landslide_category": "Debris flow",
+        "landslide_size": "Very Large",
+        "fatalities": 17,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog / GSI Bhusanket Cross-Ref"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.14,
+          11.54
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_WAY_002",
+        "date": "2019-08-08",
+        "location": "Puthumala Hillside, Wayanad",
+        "trigger": "Heavy torrential monsoon rain",
+        "landslide_category": "Mudslide / Debris flow",
+        "landslide_size": "Large",
+        "fatalities": 12,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.04,
+          11.55
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_WAY_003",
+        "date": "2020-08-06",
+        "location": "Vythiri Ghat Road",
+        "trigger": "Rainfall",
+        "landslide_category": "Rockfall / Slump",
+        "landslide_size": "Medium",
+        "fatalities": 0,
+        "confidence": "MEDIUM",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.01,
+          11.6
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_WAY_004",
+        "date": "2021-07-23",
+        "location": "Pozhuthana Western Slopes",
+        "trigger": "Monsoon downpour",
+        "landslide_category": "Debris slide",
+        "landslide_size": "Medium",
+        "fatalities": 1,
+        "confidence": "MEDIUM",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.15,
+          11.51
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_WAY_005",
+        "date": "2022-08-04",
+        "location": "Chooralmala Upper Catchment",
+        "trigger": "Continuous rain",
+        "landslide_category": "Complex / Debris flow",
+        "landslide_size": "Medium",
+        "fatalities": 0,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.17,
+          11.5
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_WAY_006",
+        "date": "2024-07-30",
+        "location": "Mundakkai - Chooralmala, Meppadi",
+        "trigger": "Extreme cloudburst & orographic deluge",
+        "landslide_category": "Catastrophic Debris Avalanche",
+        "landslide_size": "Very Large",
+        "fatalities": 350,
+        "confidence": "VERY_HIGH",
+        "source": "NASA Global Landslide Catalog / ISRO NRSC Validation"
+      }
+    }
+  ]
+}

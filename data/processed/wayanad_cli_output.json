@@ -1,0 +1,29 @@
+{
+  "status": "SUCCESS",
+  "aoi": "wayanad",
+  "processed_at": "2026-09-13T03:50:16.339749+00:00",
+  "grid_info": {
+    "crs": "EPSG:4326",
+    "utm_epsg": 32643,
+    "rows": 50,
+    "cols": 55,
+    "resolution_deg": 0.01,
+    "approx_dx_meters": 1085.71,
+    "approx_dy_meters": 1110.11,
+    "approx_cell_area_sqkm": 1.2053,
+    "bounds": [
+      75.8,
+      11.45,
+      76.35,
+      11.95
+    ]
+  },
+  "villages_analyzed": 10,
+  "alerts_generated": 10,
+  "critical_alerts_count": 8,
+  "warning_alerts_count": 2,
+  "lead_time_status": "THRESHOLD_BREACHED",
+  "estimated_lead_time_hours": 0.0,
+  "backtest_full_auc": 0.972,
+  "backtest_rain_auc": 0.583
+}

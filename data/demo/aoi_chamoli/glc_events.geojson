@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.56,
+          30.55
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_CHM_001",
+        "date": "2021-02-07",
+        "location": "Raini / Tapovan, Chamoli",
+        "trigger": "Rock/Ice avalanche + Torrential runoff",
+        "landslide_category": "Catastrophic Rockslide Debris Flood",
+        "landslide_size": "Very Large",
+        "fatalities": 204,
+        "confidence": "VERY_HIGH",
+        "source": "NASA Global Landslide Catalog / GSI Bhusanket"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.54,
+          30.52
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_CHM_002",
+        "date": "2013-06-16",
+        "location": "Joshimath Slopes",
+        "trigger": "Extreme cloudburst",
+        "landslide_category": "Debris flow",
+        "landslide_size": "Large",
+        "fatalities": 35,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.35,
+          30.28
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IND_CHM_003",
+        "date": "2017-07-20",
+        "location": "Karnaprayag Highway",
+        "trigger": "Monsoon rain",
+        "landslide_category": "Rotational slide",
+        "landslide_size": "Medium",
+        "fatalities": 2,
+        "confidence": "MEDIUM",
+        "source": "NASA Global Landslide Catalog"
+      }
+    }
+  ]
+}

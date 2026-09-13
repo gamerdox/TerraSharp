@@ -1,0 +1,57 @@
+version: "1.0.0"
+description: "SH-304 Default Pipeline & AOI Configuration"
+
+aois:
+  wayanad:
+    name: "Wayanad District, Kerala, India"
+    description: "High-hazard tropical Western Ghats hilly terrain prone to intense monsoon rain-triggered landslides and flash floods"
+    bbox:
+      min_lon: 75.80
+      min_lat: 11.45
+      max_lon: 76.35
+      max_lat: 11.95
+    center:
+      lat: 11.70
+      lon: 76.08
+    default_zoom: 11
+    utm_epsg: 32643
+    elevation_range: [600, 2100]
+
+  chamoli:
+    name: "Chamoli District, Uttarakhand, India"
+    description: "High-hazard Himalayan mountain terrain with steep valleys, high relief, and extreme cloudburst/flash-flood sensitivity"
+    bbox:
+      min_lon: 79.15
+      min_lat: 30.15
+      max_lon: 79.75
+      max_lat: 30.70
+    center:
+      lat: 30.42
+      lon: 79.45
+    default_zoom: 10
+    utm_epsg: 32644
+    elevation_range: [1000, 4500]
+
+grid:
+  resolution_deg: 0.01  # ~1.1 km at equator
+  crs: "EPSG:4326"
+
+lead_time_model:
+  name: "Caine_1980_Global_Reference"
+  formula: "I = 14.82 * (D ^ -0.39)"
+  alpha: 14.82
+  beta: -0.39
+  uncertainty_pct: 30.0
+  disclaimer: "Reference global threshold under current rainfall rate of increase; not a localized Indian forecast guarantee."
+
+thresholds:
+  landslide_risk:
+    low: [0.0, 0.25]
+    moderate: [0.25, 0.50]
+    high: [0.50, 0.75]
+    critical: [0.75, 1.00]
+  flash_flood_risk:
+    low: [0.0, 0.25]
+    moderate: [0.25, 0.50]
+    high: [0.50, 0.75]
+    critical: [0.75, 1.00]

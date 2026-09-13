@@ -1,0 +1,385 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.1,
+              11.5
+            ],
+            [
+              76.16,
+              11.5
+            ],
+            [
+              76.16,
+              11.56
+            ],
+            [
+              76.1,
+              11.56
+            ],
+            [
+              76.1,
+              11.5
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_01",
+        "village_name": "Meppadi",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 34500,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.14,
+              11.48
+            ],
+            [
+              76.19,
+              11.48
+            ],
+            [
+              76.19,
+              11.53
+            ],
+            [
+              76.14,
+              11.53
+            ],
+            [
+              76.14,
+              11.48
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_02",
+        "village_name": "Mundakkai",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 6200,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.12,
+              11.49
+            ],
+            [
+              76.17,
+              11.49
+            ],
+            [
+              76.17,
+              11.54
+            ],
+            [
+              76.12,
+              11.54
+            ],
+            [
+              76.12,
+              11.49
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_03",
+        "village_name": "Chooralmala",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 8900,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.01,
+              11.52
+            ],
+            [
+              76.08,
+              11.52
+            ],
+            [
+              76.08,
+              11.58
+            ],
+            [
+              76.01,
+              11.58
+            ],
+            [
+              76.01,
+              11.52
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_04",
+        "village_name": "Vythiri",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 28400,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.06,
+              11.59
+            ],
+            [
+              76.13,
+              11.59
+            ],
+            [
+              76.13,
+              11.64
+            ],
+            [
+              76.06,
+              11.64
+            ],
+            [
+              76.06,
+              11.59
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_05",
+        "village_name": "Kalpetta",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 42000,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.98,
+              11.56
+            ],
+            [
+              76.05,
+              11.56
+            ],
+            [
+              76.05,
+              11.62
+            ],
+            [
+              75.98,
+              11.62
+            ],
+            [
+              75.98,
+              11.56
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_06",
+        "village_name": "Pozhuthana",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 19500,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.96,
+              11.77
+            ],
+            [
+              76.05,
+              11.77
+            ],
+            [
+              76.05,
+              11.85
+            ],
+            [
+              75.96,
+              11.85
+            ],
+            [
+              75.96,
+              11.77
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_07",
+        "village_name": "Mananthavady",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 46000,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.22,
+              11.63
+            ],
+            [
+              76.31,
+              11.63
+            ],
+            [
+              76.31,
+              11.71
+            ],
+            [
+              76.22,
+              11.71
+            ],
+            [
+              76.22,
+              11.63
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_08",
+        "village_name": "Sulthan Bathery",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 45000,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.18,
+              11.6
+            ],
+            [
+              76.25,
+              11.6
+            ],
+            [
+              76.25,
+              11.66
+            ],
+            [
+              76.18,
+              11.66
+            ],
+            [
+              76.18,
+              11.6
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_09",
+        "village_name": "Ambalavayal",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 26000,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              75.92,
+              11.64
+            ],
+            [
+              76.0,
+              11.64
+            ],
+            [
+              76.0,
+              11.71
+            ],
+            [
+              75.92,
+              11.71
+            ],
+            [
+              75.92,
+              11.64
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_WYD_10",
+        "village_name": "Padinjarathara",
+        "district": "Wayanad",
+        "state": "Kerala",
+        "population": 22000,
+        "source": "Survey of India / OpenStreetMap Administrative Boundary (Clean Reference)"
+      }
+    }
+  ]
+}

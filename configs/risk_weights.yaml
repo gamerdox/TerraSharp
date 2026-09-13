@@ -1,0 +1,40 @@
+version: "1.0.0"
+status: "EXPERT_HEURISTIC_UNRESTRICTED"
+calibration_note: "Baseline expert heuristic weights prior to localized historical calibration. Versioned and transparent."
+
+landslide_weights:
+  rainfall:
+    weight: 0.35
+    description: "24h rainfall intensity + 3-day dynamic trigger component"
+    feature_keys: ["rainfall_24h_norm", "rainfall_3d_norm"]
+  slope:
+    weight: 0.30
+    description: "Steepness of terrain derived from 30m DEM (Horn algorithm)"
+    feature_keys: ["slope_norm"]
+  soil_saturation_proxy:
+    weight: 0.20
+    description: "Antecedent moisture index proxy based on 3d and 15d rainfall decay"
+    feature_keys: ["soil_saturation_proxy"]
+  historical_density:
+    weight: 0.15
+    description: "NASA Global Landslide Catalog spatial density with neutral AOI-median imputation for unrecorded zones"
+    feature_keys: ["glc_density_norm"]
+
+flash_flood_weights:
+  rainfall:
+    weight: 0.50
+    description: "Recent storm precipitation volume and intensity"
+    feature_keys: ["rainfall_24h_norm"]
+  flow_accumulation:
+    weight: 0.35
+    description: "Topographic upstream catchment contributing drainage volume (D8 routing)"
+    feature_keys: ["flow_accumulation_norm"]
+  valley_flatness:
+    weight: 0.15
+    description: "Low-slope valley bottom prone to rapid water pooling (1 - slope_norm)"
+    feature_keys: ["valley_bottom_norm"]
+
+neutral_imputation_strategy:
+  historical_density: "aoi_median"
+  missing_precipitation: "aoi_spatial_interpolate"
+  missing_elevation: "bilinear_resample"

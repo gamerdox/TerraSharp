@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sh304-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MODE=demo
+      - APP_NAME=SH-304 Hyper-Local Landslide & Flash-Flood Early Warning System
+      - DEFAULT_AOI=wayanad
+      - PORT=8000
+    volumes:
+      - ./data:/app/data
+      - ./configs:/app/configs
+    restart: unless-stopped
+
+  frontend:
+    image: node:20-alpine
+    container_name: sh304-frontend
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - backend
+    restart: unless-stopped

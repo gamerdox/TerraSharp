@@ -1,0 +1,61 @@
+"""
+Administrative Boundaries Ingestion Module.
+Loads authoritative village polygons, properties, and coordinates for spatial aggregation.
+"""
+import logging
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, Any, List, Optional
+import geopandas as gpd
+
+from backend.app.config import settings
+from backend.app.models.domain import ProvenanceTag
+
+logger = logging.getLogger(__name__)
+
+
+class BoundaryIngestionClient:
+    def __init__(self, mode: Optional[str] = None):
+        self.mode = mode or settings.mode
+
+    def get_villages_for_aoi(self, aoi_key: str) -> Dict[str, Any]:
+        """
+        Retrieves village boundaries as a GeoDataFrame and metadata.
+        """
+        demo_dir = settings.data_demo_dir / f"aoi_{aoi_key}"
+        villages_file = demo_dir / "villages.geojson"
+
+        if not villages_file.exists():
+            raise FileNotFoundError(f"Village boundaries GeoJSON not found at {villages_file}")
+
+        gdf = gpd.read_file(villages_file)
+
+        villages_list: List[Dict[str, Any]] = []
+        for _, row in gdf.iterrows():
+            geom = row.geometry
+            centroid = geom.centroid
+            villages_list.append({
+                "village_id": row.get("village_id", f"V_{_}"),
+                "village_name": row.get("village_name", f"Village {_}"),
+                "district": row.get("district", ""),
+                "state": row.get("state", ""),
+                "population": int(row.get("population", 0)),
+                "bounds": [geom.bounds[0], geom.bounds[1], geom.bounds[2], geom.bounds[3]],
+                "center": {"lon": float(centroid.x), "lat": float(centroid.y)},
+                "source": row.get("source", "Administrative Boundaries"),
+            })
+
+        return {
+            "aoi": aoi_key,
+            "count": len(villages_list),
+            "villages": villages_list,
+            "geojson_path": str(villages_file),
+            "provenance": ProvenanceTag.OBSERVED.value,
+            "data_source_url": "Authoritative Open Administrative Boundaries / Survey of India",
+            "ingested_at": datetime.now(timezone.utc).isoformat(),
+        }
+
+    def load_geodataframe(self, aoi_key: str) -> gpd.GeoDataFrame:
+        demo_dir = settings.data_demo_dir / f"aoi_{aoi_key}"
+        villages_file = demo_dir / "villages.geojson"
+        return gpd.read_file(villages_file)
