@@ -18,6 +18,7 @@ import {
   fetchRiskGrid,
   fetchPointRisk,
   fetchLivePinpoint,
+  createAoiFromPin,
   fetchLeadTime,
   fetchAlerts,
   fetchVillages,
@@ -61,6 +62,7 @@ export const App: React.FC = () => {
   const [pinnedLocation, setPinnedLocation] = useState<{ lat: number; lon: number } | null>(null);
   const [pinnedData, setPinnedData] = useState<PinPointLiveResult | null>(null);
   const [pinnedLoading, setPinnedLoading] = useState<boolean>(false);
+  const [generatingGrid, setGeneratingGrid] = useState<boolean>(false);
 
   // Modals
   const [showBacktestModal, setShowBacktestModal] = useState<boolean>(false);
@@ -188,6 +190,28 @@ export const App: React.FC = () => {
     }
   };
 
+  // Generate Full Area Risk Grid (Squares) from Pinned Location
+  const handleGenerateGridFromPin = async (lat: number, lon: number) => {
+    try {
+      setGeneratingGrid(true);
+      setLoading(true);
+      const res = await createAoiFromPin(lat, lon);
+      const newAoiId = res.active_aoi;
+      setCurrentAoi(newAoiId);
+      const aoiList = await fetchAOIs();
+      setAois(aoiList);
+      await refreshAllData();
+      setPinnedData(null);
+      setPinnedLocation(null);
+    } catch (err: any) {
+      console.error("Failed to generate AOI grid:", err);
+      setErrorMsg(err.message || "Failed to generate area risk grid.");
+    } finally {
+      setGeneratingGrid(false);
+      setLoading(false);
+    }
+  };
+
   // Select Village from Table or Polygon
   const handleSelectVillage = (v: VillageRiskSummary) => {
     setSelectedVillage(v);
@@ -265,6 +289,8 @@ export const App: React.FC = () => {
                 setPinnedData(null);
                 setPinnedLocation(null);
               }}
+              onGenerateGrid={handleGenerateGridFromPin}
+              generatingGrid={generatingGrid}
             />
           </div>
 

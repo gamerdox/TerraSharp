@@ -1,0 +1,347 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.53,
+              11.27625
+            ],
+            [
+              76.60000000000001,
+              11.27625
+            ],
+            [
+              76.60000000000001,
+              11.337499999999999
+            ],
+            [
+              76.53,
+              11.337499999999999
+            ],
+            [
+              76.53,
+              11.27625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_01",
+        "village_name": "Ooty (Udhagamandalam)",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 14500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.63,
+              11.27625
+            ],
+            [
+              76.7,
+              11.27625
+            ],
+            [
+              76.7,
+              11.337499999999999
+            ],
+            [
+              76.63,
+              11.337499999999999
+            ],
+            [
+              76.63,
+              11.27625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_02",
+        "village_name": "Coonoor",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 17000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.73,
+              11.27625
+            ],
+            [
+              76.80000000000001,
+              11.27625
+            ],
+            [
+              76.80000000000001,
+              11.337499999999999
+            ],
+            [
+              76.73,
+              11.337499999999999
+            ],
+            [
+              76.73,
+              11.27625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_03",
+        "village_name": "Kotagiri",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 19500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.53,
+              11.36375
+            ],
+            [
+              76.60000000000001,
+              11.36375
+            ],
+            [
+              76.60000000000001,
+              11.424999999999999
+            ],
+            [
+              76.53,
+              11.424999999999999
+            ],
+            [
+              76.53,
+              11.36375
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_04",
+        "village_name": "Gudalur",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 22000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.63,
+              11.36375
+            ],
+            [
+              76.7,
+              11.36375
+            ],
+            [
+              76.7,
+              11.424999999999999
+            ],
+            [
+              76.63,
+              11.424999999999999
+            ],
+            [
+              76.63,
+              11.36375
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_05",
+        "village_name": "Wellington",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 24500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.73,
+              11.36375
+            ],
+            [
+              76.80000000000001,
+              11.36375
+            ],
+            [
+              76.80000000000001,
+              11.424999999999999
+            ],
+            [
+              76.73,
+              11.424999999999999
+            ],
+            [
+              76.73,
+              11.36375
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_06",
+        "village_name": "Aruvankadu",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 27000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.53,
+              11.45125
+            ],
+            [
+              76.60000000000001,
+              11.45125
+            ],
+            [
+              76.60000000000001,
+              11.5125
+            ],
+            [
+              76.53,
+              11.5125
+            ],
+            [
+              76.53,
+              11.45125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_07",
+        "village_name": "Kundah",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 29500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.63,
+              11.45125
+            ],
+            [
+              76.7,
+              11.45125
+            ],
+            [
+              76.7,
+              11.5125
+            ],
+            [
+              76.63,
+              11.5125
+            ],
+            [
+              76.63,
+              11.45125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_08",
+        "village_name": "Manjoor",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 32000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.73,
+              11.45125
+            ],
+            [
+              76.80000000000001,
+              11.45125
+            ],
+            [
+              76.80000000000001,
+              11.5125
+            ],
+            [
+              76.73,
+              11.5125
+            ],
+            [
+              76.73,
+              11.45125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_NIL_09",
+        "village_name": "Pandalur",
+        "district": "Nilgiris (Ooty & Coonoor), Tamil Nadu, India",
+        "state": "India",
+        "population": 34500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    }
+  ]
+}

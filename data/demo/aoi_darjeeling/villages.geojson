@@ -1,0 +1,347 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.13,
+              26.92625
+            ],
+            [
+              88.2,
+              26.92625
+            ],
+            [
+              88.2,
+              26.9875
+            ],
+            [
+              88.13,
+              26.9875
+            ],
+            [
+              88.13,
+              26.92625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_01",
+        "village_name": "Darjeeling Town",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 14500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.22999999999999,
+              26.92625
+            ],
+            [
+              88.3,
+              26.92625
+            ],
+            [
+              88.3,
+              26.9875
+            ],
+            [
+              88.22999999999999,
+              26.9875
+            ],
+            [
+              88.22999999999999,
+              26.92625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_02",
+        "village_name": "Kurseong",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 17000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.33,
+              26.92625
+            ],
+            [
+              88.4,
+              26.92625
+            ],
+            [
+              88.4,
+              26.9875
+            ],
+            [
+              88.33,
+              26.9875
+            ],
+            [
+              88.33,
+              26.92625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_03",
+        "village_name": "Kalimpong",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 19500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.13,
+              27.013749999999998
+            ],
+            [
+              88.2,
+              27.013749999999998
+            ],
+            [
+              88.2,
+              27.075
+            ],
+            [
+              88.13,
+              27.075
+            ],
+            [
+              88.13,
+              27.013749999999998
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_04",
+        "village_name": "Mirik",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 22000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.22999999999999,
+              27.013749999999998
+            ],
+            [
+              88.3,
+              27.013749999999998
+            ],
+            [
+              88.3,
+              27.075
+            ],
+            [
+              88.22999999999999,
+              27.075
+            ],
+            [
+              88.22999999999999,
+              27.013749999999998
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_05",
+        "village_name": "Sukhiapokhri",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 24500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.33,
+              27.013749999999998
+            ],
+            [
+              88.4,
+              27.013749999999998
+            ],
+            [
+              88.4,
+              27.075
+            ],
+            [
+              88.33,
+              27.075
+            ],
+            [
+              88.33,
+              27.013749999999998
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_06",
+        "village_name": "Bijanbari",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 27000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.13,
+              27.10125
+            ],
+            [
+              88.2,
+              27.10125
+            ],
+            [
+              88.2,
+              27.1625
+            ],
+            [
+              88.13,
+              27.1625
+            ],
+            [
+              88.13,
+              27.10125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_07",
+        "village_name": "Lava",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 29500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.22999999999999,
+              27.10125
+            ],
+            [
+              88.3,
+              27.10125
+            ],
+            [
+              88.3,
+              27.1625
+            ],
+            [
+              88.22999999999999,
+              27.1625
+            ],
+            [
+              88.22999999999999,
+              27.10125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_08",
+        "village_name": "Pedong",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 32000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              88.33,
+              27.10125
+            ],
+            [
+              88.4,
+              27.10125
+            ],
+            [
+              88.4,
+              27.1625
+            ],
+            [
+              88.33,
+              27.1625
+            ],
+            [
+              88.33,
+              27.10125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_DAR_09",
+        "village_name": "Gorubathan",
+        "district": "Darjeeling & Kalimpong, West Bengal, India",
+        "state": "India",
+        "population": 34500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    }
+  ]
+}

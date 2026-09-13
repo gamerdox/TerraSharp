@@ -53,3 +53,30 @@ def select_aoi(aoi_key: str):
         raise HTTPException(status_code=404, detail=f"AOI '{aoi_key}' not recognized. Available: {list(aois.keys())}")
     pipeline_state.current_aoi = aoi_key
     return {"status": "SUCCESS", "active_aoi": aoi_key, "message": f"Active AOI set to {aois[aoi_key]['name']}"}
+
+
+@router.post("/create_from_pin")
+def create_aoi_from_pin(lat: float, lon: float, name: str = None):
+    """
+    Creates a new custom AOI centered on any given (lat, lon) with a complete georeferenced raster grid,
+    runs the data-fusion pipeline, and switches the active AOI to it.
+    """
+    from backend.app.ingestion.dynamic_aoi_generator import create_custom_aoi_from_point
+    from backend.app.pipeline import PipelineOrchestrator
+
+    res = create_custom_aoi_from_point(lat, lon, name)
+    aoi_key = res["aoi_key"]
+    pipeline_state.current_aoi = aoi_key
+
+    # Execute complete pipeline for the newly generated AOI
+    orchestrator = PipelineOrchestrator()
+    pipeline_result = orchestrator.run(aoi_key)
+
+    return {
+        "status": "SUCCESS",
+        "active_aoi": aoi_key,
+        "name": res["config"]["name"],
+        "bbox": res["config"]["bbox"],
+        "center": res["config"]["center"],
+        "pipeline_result": pipeline_result,
+    }

@@ -97,3 +97,10 @@ export async function fetchLivePinpoint(lat: number, lon: number): Promise<PinPo
   if (!res.ok) throw new Error(`Failed to fetch live pinpoint prediction: ${res.statusText}`);
   return res.json();
 }
+
+export async function createAoiFromPin(lat: number, lon: number, name?: string): Promise<any> {
+  const query = name ? `lat=${lat}&lon=${lon}&name=${encodeURIComponent(name)}` : `lat=${lat}&lon=${lon}`;
+  const res = await fetch(`${API_BASE}/aoi/create_from_pin?${query}`, { method: "POST" });
+  if (!res.ok) throw new Error(`Failed to generate AOI grid: ${res.statusText}`);
+  return res.json();
+}

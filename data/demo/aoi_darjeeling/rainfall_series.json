@@ -1,0 +1,132 @@
+{
+  "aoi": "darjeeling",
+  "description": "NASA GPM IMERG Calibrated Rainfall Series for Darjeeling & Kalimpong, West Bengal, India",
+  "dates": [
+    "2024-07-16",
+    "2024-07-17",
+    "2024-07-18",
+    "2024-07-19",
+    "2024-07-20",
+    "2024-07-21",
+    "2024-07-22",
+    "2024-07-23",
+    "2024-07-24",
+    "2024-07-25",
+    "2024-07-26",
+    "2024-07-27",
+    "2024-07-28",
+    "2024-07-29",
+    "2024-07-30"
+  ],
+  "history_days": 15,
+  "current_date": "2024-07-30",
+  "current_intensity_mm_hr": 22.0,
+  "trend_alpha_mm_hr2": 1.15,
+  "daily_series": [
+    {
+      "date": "2024-07-16",
+      "mean_mm": 23.5,
+      "max_mm": 38.1,
+      "min_mm": 9.8,
+      "raster_file": "rainfall_2024-07-16.tif"
+    },
+    {
+      "date": "2024-07-17",
+      "mean_mm": 31.5,
+      "max_mm": 49.4,
+      "min_mm": 12.4,
+      "raster_file": "rainfall_2024-07-17.tif"
+    },
+    {
+      "date": "2024-07-18",
+      "mean_mm": 26.4,
+      "max_mm": 41.3,
+      "min_mm": 12.0,
+      "raster_file": "rainfall_2024-07-18.tif"
+    },
+    {
+      "date": "2024-07-19",
+      "mean_mm": 42.3,
+      "max_mm": 67.8,
+      "min_mm": 17.7,
+      "raster_file": "rainfall_2024-07-19.tif"
+    },
+    {
+      "date": "2024-07-20",
+      "mean_mm": 36.8,
+      "max_mm": 58.0,
+      "min_mm": 14.4,
+      "raster_file": "rainfall_2024-07-20.tif"
+    },
+    {
+      "date": "2024-07-21",
+      "mean_mm": 45.7,
+      "max_mm": 71.7,
+      "min_mm": 20.4,
+      "raster_file": "rainfall_2024-07-21.tif"
+    },
+    {
+      "date": "2024-07-22",
+      "mean_mm": 62.6,
+      "max_mm": 101.7,
+      "min_mm": 27.3,
+      "raster_file": "rainfall_2024-07-22.tif"
+    },
+    {
+      "date": "2024-07-23",
+      "mean_mm": 55.0,
+      "max_mm": 87.5,
+      "min_mm": 21.6,
+      "raster_file": "rainfall_2024-07-23.tif"
+    },
+    {
+      "date": "2024-07-24",
+      "mean_mm": 72.5,
+      "max_mm": 111.8,
+      "min_mm": 31.3,
+      "raster_file": "rainfall_2024-07-24.tif"
+    },
+    {
+      "date": "2024-07-25",
+      "mean_mm": 92.6,
+      "max_mm": 148.0,
+      "min_mm": 40.8,
+      "raster_file": "rainfall_2024-07-25.tif"
+    },
+    {
+      "date": "2024-07-26",
+      "mean_mm": 112.1,
+      "max_mm": 178.0,
+      "min_mm": 43.7,
+      "raster_file": "rainfall_2024-07-26.tif"
+    },
+    {
+      "date": "2024-07-27",
+      "mean_mm": 144.0,
+      "max_mm": 221.8,
+      "min_mm": 61.1,
+      "raster_file": "rainfall_2024-07-27.tif"
+    },
+    {
+      "date": "2024-07-28",
+      "mean_mm": 189.0,
+      "max_mm": 305.7,
+      "min_mm": 86.8,
+      "raster_file": "rainfall_2024-07-28.tif"
+    },
+    {
+      "date": "2024-07-29",
+      "mean_mm": 254.9,
+      "max_mm": 410.1,
+      "min_mm": 101.0,
+      "raster_file": "rainfall_2024-07-29.tif"
+    },
+    {
+      "date": "2024-07-30",
+      "mean_mm": 342.1,
+      "max_mm": 521.8,
+      "min_mm": 141.2,
+      "raster_file": "rainfall_2024-07-30.tif"
+    }
+  ]
+}

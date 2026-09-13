@@ -32,6 +32,66 @@ aois:
     utm_epsg: 32644
     elevation_range: [1000, 4500]
 
+  idukki:
+    name: "Idukki & Munnar, Kerala, India"
+    description: "Steep Western Ghats tea-plantation slopes prone to torrential monsoon debris flows and slope failures"
+    bbox:
+      min_lon: 76.70
+      min_lat: 9.65
+      max_lon: 77.25
+      max_lat: 10.20
+    center:
+      lat: 9.95
+      lon: 76.95
+    default_zoom: 11
+    utm_epsg: 32643
+    elevation_range: [500, 2695]
+
+  shimla:
+    name: "Shimla & Kullu, Himachal Pradesh, India"
+    description: "Steep Himalayan valleys prone to torrential cloudbursts, debris avalanches, and flash floods"
+    bbox:
+      min_lon: 77.00
+      min_lat: 31.00
+      max_lon: 77.40
+      max_lat: 31.40
+    center:
+      lat: 31.18
+      lon: 77.17
+    default_zoom: 11
+    utm_epsg: 32643
+    elevation_range: [1100, 3800]
+
+  darjeeling:
+    name: "Darjeeling & Kalimpong, West Bengal, India"
+    description: "High-hazard Eastern Himalayas ridge with steep monsoon-saturated slopes prone to translational landslides"
+    bbox:
+      min_lon: 88.10
+      min_lat: 26.90
+      max_lon: 88.50
+      max_lat: 27.25
+    center:
+      lat: 27.04
+      lon: 88.26
+    default_zoom: 11
+    utm_epsg: 32645
+    elevation_range: [300, 3636]
+
+  nilgiris:
+    name: "Nilgiris (Ooty & Coonoor), Tamil Nadu, India"
+    description: "High-altitude Western Ghats plateau with steep escarpments sensitive to heavy rainfall-triggered slips"
+    bbox:
+      min_lon: 76.50
+      min_lat: 11.25
+      max_lon: 76.90
+      max_lat: 11.60
+    center:
+      lat: 11.41
+      lon: 76.70
+    default_zoom: 11
+    utm_epsg: 32643
+    elevation_range: [600, 2637]
+
 grid:
   resolution_deg: 0.01  # ~1.1 km at equator
   crs: "EPSG:4326"

@@ -5,27 +5,76 @@ interface Props {
   data: PinPointLiveResult | null;
   loading: boolean;
   onClose: () => void;
+  onGenerateGrid?: (lat: number, lon: number) => void;
+  generatingGrid?: boolean;
 }
 
-export const PinnedPointInspector: React.FC<Props> = ({ data, loading, onClose }) => {
+export const PinnedPointInspector: React.FC<Props> = ({
+  data,
+  loading,
+  onClose,
+  onGenerateGrid,
+  generatingGrid = false,
+}) => {
   if (!data && !loading) return null;
 
   return (
-    <div className="absolute top-20 right-6 z-[1000] w-96 max-w-[calc(100vw-3rem)] max-h-[calc(100vh-7rem)] overflow-y-auto bg-slate-900/95 backdrop-blur border border-slate-700 shadow-2xl rounded-xl p-5 text-slate-100 animate-in fade-in slide-in-from-right-4 duration-200">
+    <div
+      style={{
+        position: "absolute",
+        top: "20px",
+        right: "20px",
+        zIndex: 2500,
+        width: "390px",
+        maxWidth: "calc(100vw - 40px)",
+        maxHeight: "calc(100vh - 120px)",
+        overflowY: "auto",
+        backgroundColor: "#0f172a",
+        border: "1px solid #334155",
+        borderRadius: "12px",
+        padding: "18px",
+        color: "#f8fafc",
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.05)",
+      }}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-750 pb-3 mb-4">
-        <div className="flex items-center gap-2">
-          <span className="flex h-3 w-3 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
-          </span>
-          <h3 className="font-semibold text-base text-slate-100 flex items-center gap-1.5">
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderBottom: "1px solid #334155",
+          paddingBottom: "10px",
+          marginBottom: "14px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span
+            style={{
+              display: "inline-block",
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              backgroundColor: "#f43f5e",
+              boxShadow: "0 0 10px #f43f5e",
+            }}
+          />
+          <h3 style={{ fontSize: "15px", fontWeight: "700", margin: 0, color: "#f8fafc" }}>
             Live Pinpoint Predictor
           </h3>
         </div>
         <button
           onClick={onClose}
-          className="text-slate-400 hover:text-slate-200 text-lg leading-none p-1 rounded hover:bg-slate-800 transition"
+          style={{
+            background: "transparent",
+            border: "none",
+            color: "#94a3b8",
+            cursor: "pointer",
+            fontSize: "18px",
+            lineHeight: 1,
+            padding: "4px 8px",
+            borderRadius: "4px",
+          }}
           title="Close Inspector"
         >
           ✕
@@ -33,166 +82,401 @@ export const PinnedPointInspector: React.FC<Props> = ({ data, loading, onClose }
       </div>
 
       {loading && (
-        <div className="py-12 flex flex-col items-center justify-center gap-3">
-          <div className="animate-spin rounded-full h-8 w-8 border-2 border-indigo-500 border-t-transparent"></div>
-          <p className="text-xs text-slate-400 font-mono animate-pulse">
+        <div style={{ padding: "30px 0", textAlign: "center" }}>
+          <div
+            style={{
+              display: "inline-block",
+              width: "28px",
+              height: "28px",
+              border: "3px solid #3b82f6",
+              borderTopColor: "transparent",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+            }}
+          />
+          <p style={{ fontSize: "12px", color: "#94a3b8", marginTop: "12px", fontFamily: "monospace" }}>
             Querying 30m DEM stencil & live rainfall feeds...
           </p>
         </div>
       )}
 
       {!loading && data && (
-        <div className="space-y-4">
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {/* Coordinates Bar */}
-          <div className="bg-slate-800/80 rounded-lg p-2.5 flex items-center justify-between text-xs font-mono text-slate-300 border border-slate-700/50">
+          <div
+            style={{
+              backgroundColor: "#1e293b",
+              borderRadius: "8px",
+              padding: "8px 12px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              fontSize: "12px",
+              fontFamily: "monospace",
+              border: "1px solid #334155",
+            }}
+          >
             <div>
-              <span className="text-slate-500">LAT:</span> {data.latitude.toFixed(4)}°
+              <span style={{ color: "#64748b" }}>LAT:</span> {data.latitude.toFixed(4)}°
             </div>
             <div>
-              <span className="text-slate-500">LON:</span> {data.longitude.toFixed(4)}°
+              <span style={{ color: "#64748b" }}>LON:</span> {data.longitude.toFixed(4)}°
             </div>
-            <div className="text-indigo-400 font-medium">
-              {data.elevation_m}m ASL
-            </div>
+            <div style={{ color: "#38bdf8", fontWeight: "600" }}>{data.elevation_m}m ASL</div>
           </div>
+
+          {/* Action Button: Generate Full Grid for This Location */}
+          {onGenerateGrid && (
+            <button
+              onClick={() => onGenerateGrid(data.latitude, data.longitude)}
+              disabled={generatingGrid}
+              style={{
+                width: "100%",
+                padding: "10px 14px",
+                fontSize: "13px",
+                fontWeight: "700",
+                borderRadius: "8px",
+                border: "none",
+                cursor: generatingGrid ? "not-allowed" : "pointer",
+                backgroundColor: generatingGrid ? "#475569" : "#2563eb",
+                color: "#ffffff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                boxShadow: "0 4px 12px rgba(37, 99, 235, 0.4)",
+                transition: "background 0.2s",
+              }}
+            >
+              {generatingGrid ? (
+                <>
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: "14px",
+                      height: "14px",
+                      border: "2px solid #ffffff",
+                      borderTopColor: "transparent",
+                      borderRadius: "50%",
+                      animation: "spin 1s linear infinite",
+                    }}
+                  />
+                  <span>Generating Full Area Squares...</span>
+                </>
+              ) : (
+                <>
+                  <span>🗺️</span>
+                  <span>Generate Full Risk Grid for this Area</span>
+                </>
+              )}
+            </button>
+          )}
 
           {/* False-Alarm Mitigation Gate Card */}
           <div
-            className={`p-3 rounded-lg border text-xs leading-relaxed ${
-              data.false_alarm_mitigation.suppressed
-                ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
+            style={{
+              padding: "10px 12px",
+              borderRadius: "8px",
+              border: data.false_alarm_mitigation.suppressed
+                ? "1px solid #059669"
                 : data.alert_state === "CRITICAL"
-                ? "bg-rose-950/40 border-rose-500/50 text-rose-200"
-                : "bg-slate-800/80 border-slate-700 text-slate-300"
-            }`}
+                ? "1px solid #dc2626"
+                : "1px solid #334155",
+              backgroundColor: data.false_alarm_mitigation.suppressed
+                ? "rgba(6, 78, 59, 0.4)"
+                : data.alert_state === "CRITICAL"
+                ? "rgba(127, 29, 29, 0.4)"
+                : "#1e293b",
+              fontSize: "12px",
+              lineHeight: 1.4,
+            }}
           >
-            <div className="flex items-center justify-between font-semibold mb-1">
-              <span className="flex items-center gap-1.5">
-                {data.false_alarm_mitigation.suppressed ? "🛡️ FALSE ALARM SUPPRESSED" : "⚡ PREDICTION CONFIDENCE"}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontWeight: "700",
+                marginBottom: "4px",
+              }}
+            >
+              <span
+                style={{
+                  color: data.false_alarm_mitigation.suppressed
+                    ? "#34d399"
+                    : data.alert_state === "CRITICAL"
+                    ? "#f87171"
+                    : "#38bdf8",
+                }}
+              >
+                {data.false_alarm_mitigation.suppressed
+                  ? "🛡️ FALSE ALARM SUPPRESSED"
+                  : "⚡ PREDICTION CONFIDENCE"}
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-black/40 text-[10px] font-mono font-bold">
+              <span
+                style={{
+                  fontSize: "10px",
+                  fontFamily: "monospace",
+                  fontWeight: "700",
+                  padding: "2px 6px",
+                  borderRadius: "4px",
+                  backgroundColor: "rgba(0,0,0,0.5)",
+                  color: "#f8fafc",
+                }}
+              >
                 {data.false_alarm_mitigation.confidence_score_pct}% CONFIDENCE
               </span>
             </div>
-            <p className="text-[11px] opacity-90">
+            <p style={{ margin: 0, fontSize: "11px", color: "#cbd5e1" }}>
               {data.false_alarm_mitigation.status_message}
             </p>
           </div>
 
           {/* Risk Scores Grid */}
-          <div className="grid grid-cols-2 gap-2.5">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
             {/* Landslide Risk */}
-            <div className="bg-slate-800/60 border border-slate-700/70 rounded-lg p-3">
-              <div className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
-                Landslide Hazard
+            <div
+              style={{
+                backgroundColor: "#1e293b",
+                border: "1px solid #334155",
+                borderRadius: "8px",
+                padding: "10px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "10px",
+                  textTransform: "uppercase",
+                  color: "#94a3b8",
+                  fontWeight: "700",
+                  marginBottom: "4px",
+                }}
+              >
+                Landslide Risk
               </div>
-              <div className="text-xl font-bold font-mono text-slate-100 flex items-baseline gap-1">
-                {(data.landslide_risk * 100).toFixed(0)}
-                <span className="text-xs font-normal text-slate-400">%</span>
+              <div
+                style={{
+                  fontSize: "22px",
+                  fontWeight: "800",
+                  fontFamily: "monospace",
+                  color:
+                    data.landslide_risk >= 0.75
+                      ? "#ef4444"
+                      : data.landslide_risk >= 0.5
+                      ? "#f97316"
+                      : data.landslide_risk >= 0.25
+                      ? "#eab308"
+                      : "#22c55e",
+                }}
+              >
+                {(data.landslide_risk * 100).toFixed(0)}%
               </div>
-              <div className="mt-1.5 inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-700/80 text-slate-200">
+              <div
+                style={{
+                  marginTop: "6px",
+                  display: "inline-block",
+                  padding: "2px 6px",
+                  borderRadius: "4px",
+                  fontSize: "10px",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                  color: "#e2e8f0",
+                }}
+              >
                 {data.risk_class}
               </div>
             </div>
 
             {/* Flash Flood Risk */}
-            <div className="bg-slate-800/60 border border-slate-700/70 rounded-lg p-3">
-              <div className="text-[10px] uppercase tracking-wider text-slate-400 font-semibold mb-1">
+            <div
+              style={{
+                backgroundColor: "#1e293b",
+                border: "1px solid #334155",
+                borderRadius: "8px",
+                padding: "10px",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "10px",
+                  textTransform: "uppercase",
+                  color: "#94a3b8",
+                  fontWeight: "700",
+                  marginBottom: "4px",
+                }}
+              >
                 Flash Flood Risk
               </div>
-              <div className="text-xl font-bold font-mono text-slate-100 flex items-baseline gap-1">
-                {(data.flash_flood_risk * 100).toFixed(0)}
-                <span className="text-xs font-normal text-slate-400">%</span>
+              <div
+                style={{
+                  fontSize: "22px",
+                  fontWeight: "800",
+                  fontFamily: "monospace",
+                  color: data.flash_flood_risk > 0.5 ? "#38bdf8" : "#94a3b8",
+                }}
+              >
+                {(data.flash_flood_risk * 100).toFixed(0)}%
               </div>
-              <div className="mt-1.5 inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-700/80 text-slate-200">
+              <div
+                style={{
+                  marginTop: "6px",
+                  display: "inline-block",
+                  padding: "2px 6px",
+                  borderRadius: "4px",
+                  fontSize: "10px",
+                  fontWeight: "700",
+                  textTransform: "uppercase",
+                  backgroundColor: "rgba(0,0,0,0.3)",
+                  color: "#e2e8f0",
+                }}
+              >
                 {data.flash_flood_risk > 0.5 ? "ELEVATED" : "MODERATE"}
               </div>
             </div>
           </div>
 
-          {/* Metrics Detail Tabs/Sections */}
-          <div className="space-y-2 text-xs">
-            {/* Topography */}
-            <div className="bg-slate-800/40 rounded-lg p-2.5 border border-slate-700/50">
-              <div className="font-semibold text-slate-300 mb-2 flex items-center justify-between">
-                <span>🏔️ Topography (Horn 3x3)</span>
-                <span className="text-[10px] text-slate-400">SRTM 30m</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2 text-slate-300">
-                <div>
-                  <span className="text-slate-500">Slope Gradient:</span>{" "}
-                  <span className={`font-mono font-medium ${data.slope_deg >= 25 ? "text-amber-400 font-bold" : ""}`}>
-                    {data.slope_deg}°
-                  </span>
-                </div>
-                <div>
-                  <span className="text-slate-500">Aspect / Facing:</span>{" "}
-                  <span className="font-mono">{data.aspect_deg}°</span>
-                </div>
-              </div>
+          {/* Topography Card */}
+          <div
+            style={{
+              backgroundColor: "#1e293b",
+              borderRadius: "8px",
+              padding: "10px 12px",
+              border: "1px solid #334155",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "12px",
+                fontWeight: "700",
+                color: "#e2e8f0",
+                marginBottom: "6px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <span>🏔️ Topography (Horn 3×3)</span>
+              <span style={{ fontSize: "10px", color: "#64748b" }}>SRTM 30m</span>
             </div>
-
-            {/* Live Rainfall */}
-            <div className="bg-slate-800/40 rounded-lg p-2.5 border border-slate-700/50">
-              <div className="font-semibold text-slate-300 mb-2 flex items-center justify-between">
-                <span>🌧️ Live Rainfall Feeds</span>
-                <span className="text-[10px] text-indigo-400">Hourly Real-Time</span>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", fontSize: "12px" }}>
+              <div>
+                <span style={{ color: "#94a3b8" }}>Slope:</span>{" "}
+                <strong style={{ fontFamily: "monospace", color: data.slope_deg >= 25 ? "#f97316" : "#f8fafc" }}>
+                  {data.slope_deg}°
+                </strong>
               </div>
-              <div className="grid grid-cols-3 gap-1.5 text-center font-mono">
-                <div className="bg-slate-900/60 p-1.5 rounded border border-slate-800">
-                  <div className="text-[10px] text-slate-400">24 Hours</div>
-                  <div className="text-xs font-bold text-slate-200">{data.rainfall_24h_mm} mm</div>
-                </div>
-                <div className="bg-slate-900/60 p-1.5 rounded border border-slate-800">
-                  <div className="text-[10px] text-slate-400">15 Days</div>
-                  <div className="text-xs font-bold text-slate-200">{data.rainfall_15d_mm} mm</div>
-                </div>
-                <div className="bg-slate-900/60 p-1.5 rounded border border-slate-800">
-                  <div className="text-[10px] text-slate-400">Rate</div>
-                  <div className="text-xs font-bold text-indigo-300">{data.current_intensity_mm_hr} mm/h</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Soil Saturation & Lead Time */}
-            <div className="bg-slate-800/40 rounded-lg p-2.5 border border-slate-700/50 space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-slate-400">Soil Moisture Proxy:</span>
-                <span className="font-mono font-semibold text-slate-200">
-                  {data.soil_saturation_pct}%
-                </span>
-              </div>
-              {/* Progress bar */}
-              <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden">
-                <div
-                  className={`h-full transition-all duration-500 ${
-                    data.soil_saturation_pct > 70
-                      ? "bg-rose-500"
-                      : data.soil_saturation_pct > 40
-                      ? "bg-amber-400"
-                      : "bg-emerald-400"
-                  }`}
-                  style={{ width: `${Math.min(100, data.soil_saturation_pct)}%` }}
-                ></div>
-              </div>
-
-              <div className="flex justify-between items-center pt-1 border-t border-slate-750">
-                <span className="text-slate-400">Caine (1980) Lead-Time:</span>
-                <span className="font-mono font-semibold text-indigo-300">
-                  {data.caine_threshold.estimated_lead_time_hours} hrs
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-[11px] text-slate-400">
-                <span>Threshold Status:</span>
-                <span className="font-mono text-slate-300">{data.caine_threshold.status}</span>
+              <div>
+                <span style={{ color: "#94a3b8" }}>Aspect:</span>{" "}
+                <strong style={{ fontFamily: "monospace" }}>{data.aspect_deg}°</strong>
               </div>
             </div>
           </div>
 
-          {/* Provenance Footer */}
-          <div className="pt-2 border-t border-slate-800 text-[10px] text-slate-500 flex justify-between items-center">
-            <span className="truncate max-w-[200px]" title={data.data_provenance.terrain_source}>
-              Data: {data.data_provenance.terrain} + {data.data_provenance.rainfall}
+          {/* Live Rainfall Feeds */}
+          <div
+            style={{
+              backgroundColor: "#1e293b",
+              borderRadius: "8px",
+              padding: "10px 12px",
+              border: "1px solid #334155",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "12px",
+                fontWeight: "700",
+                color: "#e2e8f0",
+                marginBottom: "8px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <span>🌧️ Live Rainfall Feeds</span>
+              <span style={{ fontSize: "10px", color: "#38bdf8" }}>Hourly Live</span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "6px", textAlign: "center" }}>
+              <div style={{ backgroundColor: "#0f172a", padding: "6px", borderRadius: "6px", border: "1px solid #334155" }}>
+                <div style={{ fontSize: "10px", color: "#64748b" }}>24 Hours</div>
+                <div style={{ fontSize: "12px", fontWeight: "700", fontFamily: "monospace" }}>
+                  {data.rainfall_24h_mm} mm
+                </div>
+              </div>
+              <div style={{ backgroundColor: "#0f172a", padding: "6px", borderRadius: "6px", border: "1px solid #334155" }}>
+                <div style={{ fontSize: "10px", color: "#64748b" }}>15 Days</div>
+                <div style={{ fontSize: "12px", fontWeight: "700", fontFamily: "monospace" }}>
+                  {data.rainfall_15d_mm} mm
+                </div>
+              </div>
+              <div style={{ backgroundColor: "#0f172a", padding: "6px", borderRadius: "6px", border: "1px solid #334155" }}>
+                <div style={{ fontSize: "10px", color: "#64748b" }}>Rate</div>
+                <div style={{ fontSize: "12px", fontWeight: "700", fontFamily: "monospace", color: "#38bdf8" }}>
+                  {data.current_intensity_mm_hr} mm/h
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Soil Moisture & Caine Lead-Time */}
+          <div
+            style={{
+              backgroundColor: "#1e293b",
+              borderRadius: "8px",
+              padding: "10px 12px",
+              border: "1px solid #334155",
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              fontSize: "12px",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ color: "#94a3b8" }}>Soil Moisture Saturation:</span>
+              <strong style={{ fontFamily: "monospace" }}>{data.soil_saturation_pct}%</strong>
+            </div>
+
+            <div style={{ width: "100%", height: "6px", backgroundColor: "#0f172a", borderRadius: "4px", overflow: "hidden" }}>
+              <div
+                style={{
+                  height: "100%",
+                  width: `${Math.min(100, data.soil_saturation_pct)}%`,
+                  backgroundColor:
+                    data.soil_saturation_pct > 70
+                      ? "#ef4444"
+                      : data.soil_saturation_pct > 40
+                      ? "#eab308"
+                      : "#22c55e",
+                  transition: "width 0.4s",
+                }}
+              />
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "4px", borderTop: "1px solid #334155" }}>
+              <span style={{ color: "#94a3b8" }}>Caine (1980) Lead-Time:</span>
+              <strong style={{ fontFamily: "monospace", color: "#38bdf8" }}>
+                {data.caine_threshold.estimated_lead_time_hours} hrs
+              </strong>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "11px" }}>
+              <span style={{ color: "#64748b" }}>Threshold Status:</span>
+              <span style={{ fontFamily: "monospace", color: "#cbd5e1" }}>
+                {data.caine_threshold.status}
+              </span>
+            </div>
+          </div>
+
+          {/* Footer Provenance */}
+          <div
+            style={{
+              fontSize: "10px",
+              color: "#64748b",
+              display: "flex",
+              justifyContent: "space-between",
+              paddingTop: "6px",
+              borderTop: "1px solid #334155",
+            }}
+          >
+            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "220px" }}>
+              {data.data_provenance.terrain_source}
             </span>
             <span>{new Date(data.data_provenance.fetched_at).toLocaleTimeString()}</span>
           </div>

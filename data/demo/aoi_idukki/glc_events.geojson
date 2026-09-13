@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.99,
+          9.9
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IDUKKI_01",
+        "date": "2018-08-15",
+        "location": "Idukki District, Kerala, India Mountain Pass",
+        "trigger": "Continuous Monsoon Rain",
+        "landslide_category": "Debris flow",
+        "landslide_size": "Large",
+        "fatalities": 8,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.92,
+          9.99
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IDUKKI_02",
+        "date": "2020-08-07",
+        "location": "Idukki District, Kerala, India Valley Road",
+        "trigger": "Torrential Downpour",
+        "landslide_category": "Mudslide",
+        "landslide_size": "Medium",
+        "fatalities": 2,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.97,
+          9.97
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_IDUKKI_03",
+        "date": "2024-07-29",
+        "location": "Idukki District, Kerala, India Upper Slope",
+        "trigger": "Orographic Deluge",
+        "landslide_category": "Catastrophic Debris Avalanche",
+        "landslide_size": "Very Large",
+        "fatalities": 45,
+        "confidence": "VERY_HIGH",
+        "source": "NASA Global Landslide Catalog / GSI"
+      }
+    }
+  ]
+}

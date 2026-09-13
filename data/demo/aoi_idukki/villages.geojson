@@ -1,0 +1,347 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.74125000000001,
+              9.69125
+            ],
+            [
+              76.8375,
+              9.69125
+            ],
+            [
+              76.8375,
+              9.7875
+            ],
+            [
+              76.74125000000001,
+              9.7875
+            ],
+            [
+              76.74125000000001,
+              9.69125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_01",
+        "village_name": "Munnar",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 14500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.87875,
+              9.69125
+            ],
+            [
+              76.975,
+              9.69125
+            ],
+            [
+              76.975,
+              9.7875
+            ],
+            [
+              76.87875,
+              9.7875
+            ],
+            [
+              76.87875,
+              9.69125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_02",
+        "village_name": "Devikulam",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 17000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.01625,
+              9.69125
+            ],
+            [
+              77.1125,
+              9.69125
+            ],
+            [
+              77.1125,
+              9.7875
+            ],
+            [
+              77.01625,
+              9.7875
+            ],
+            [
+              77.01625,
+              9.69125
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_03",
+        "village_name": "Adimali",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 19500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.74125000000001,
+              9.82875
+            ],
+            [
+              76.8375,
+              9.82875
+            ],
+            [
+              76.8375,
+              9.924999999999999
+            ],
+            [
+              76.74125000000001,
+              9.924999999999999
+            ],
+            [
+              76.74125000000001,
+              9.82875
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_04",
+        "village_name": "Udumpanchola",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 22000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.87875,
+              9.82875
+            ],
+            [
+              76.975,
+              9.82875
+            ],
+            [
+              76.975,
+              9.924999999999999
+            ],
+            [
+              76.87875,
+              9.924999999999999
+            ],
+            [
+              76.87875,
+              9.82875
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_05",
+        "village_name": "Peerumedu",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 24500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.01625,
+              9.82875
+            ],
+            [
+              77.1125,
+              9.82875
+            ],
+            [
+              77.1125,
+              9.924999999999999
+            ],
+            [
+              77.01625,
+              9.924999999999999
+            ],
+            [
+              77.01625,
+              9.82875
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_06",
+        "village_name": "Nedumkandam",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 27000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.74125000000001,
+              9.96625
+            ],
+            [
+              76.8375,
+              9.96625
+            ],
+            [
+              76.8375,
+              10.0625
+            ],
+            [
+              76.74125000000001,
+              10.0625
+            ],
+            [
+              76.74125000000001,
+              9.96625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_07",
+        "village_name": "Kattappana",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 29500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              76.87875,
+              9.96625
+            ],
+            [
+              76.975,
+              9.96625
+            ],
+            [
+              76.975,
+              10.0625
+            ],
+            [
+              76.87875,
+              10.0625
+            ],
+            [
+              76.87875,
+              9.96625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_08",
+        "village_name": "Painavu",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 32000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.01625,
+              9.96625
+            ],
+            [
+              77.1125,
+              9.96625
+            ],
+            [
+              77.1125,
+              10.0625
+            ],
+            [
+              77.01625,
+              10.0625
+            ],
+            [
+              77.01625,
+              9.96625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_IDU_09",
+        "village_name": "Vandiperiyar",
+        "district": "Idukki District, Kerala, India",
+        "state": "India",
+        "population": 34500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    }
+  ]
+}

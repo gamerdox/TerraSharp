@@ -1,0 +1,68 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.21,
+          31.13
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_SHIMLA_01",
+        "date": "2018-08-15",
+        "location": "Shimla & Kullu, Himachal Pradesh, India Mountain Pass",
+        "trigger": "Continuous Monsoon Rain",
+        "landslide_category": "Debris flow",
+        "landslide_size": "Large",
+        "fatalities": 8,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.14,
+          31.22
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_SHIMLA_02",
+        "date": "2020-08-07",
+        "location": "Shimla & Kullu, Himachal Pradesh, India Valley Road",
+        "trigger": "Torrential Downpour",
+        "landslide_category": "Mudslide",
+        "landslide_size": "Medium",
+        "fatalities": 2,
+        "confidence": "HIGH",
+        "source": "NASA Global Landslide Catalog"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.19,
+          31.2
+        ]
+      },
+      "properties": {
+        "event_id": "GLC_SHIMLA_03",
+        "date": "2024-07-29",
+        "location": "Shimla & Kullu, Himachal Pradesh, India Upper Slope",
+        "trigger": "Orographic Deluge",
+        "landslide_category": "Catastrophic Debris Avalanche",
+        "landslide_size": "Very Large",
+        "fatalities": 45,
+        "confidence": "VERY_HIGH",
+        "source": "NASA Global Landslide Catalog / GSI"
+      }
+    }
+  ]
+}

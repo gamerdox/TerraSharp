@@ -1,0 +1,347 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.03,
+              31.03
+            ],
+            [
+              77.10000000000001,
+              31.03
+            ],
+            [
+              77.10000000000001,
+              31.1
+            ],
+            [
+              77.03,
+              31.1
+            ],
+            [
+              77.03,
+              31.03
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_01",
+        "village_name": "Shimla Ridge",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 14500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.13,
+              31.03
+            ],
+            [
+              77.2,
+              31.03
+            ],
+            [
+              77.2,
+              31.1
+            ],
+            [
+              77.13,
+              31.1
+            ],
+            [
+              77.13,
+              31.03
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_02",
+        "village_name": "Kufri",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 17000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.23,
+              31.03
+            ],
+            [
+              77.30000000000001,
+              31.03
+            ],
+            [
+              77.30000000000001,
+              31.1
+            ],
+            [
+              77.23,
+              31.1
+            ],
+            [
+              77.23,
+              31.03
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_03",
+        "village_name": "Mashobra",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 19500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.03,
+              31.13
+            ],
+            [
+              77.10000000000001,
+              31.13
+            ],
+            [
+              77.10000000000001,
+              31.2
+            ],
+            [
+              77.03,
+              31.2
+            ],
+            [
+              77.03,
+              31.13
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_04",
+        "village_name": "Narkanda",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 22000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.13,
+              31.13
+            ],
+            [
+              77.2,
+              31.13
+            ],
+            [
+              77.2,
+              31.2
+            ],
+            [
+              77.13,
+              31.2
+            ],
+            [
+              77.13,
+              31.13
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_05",
+        "village_name": "Theog",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 24500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.23,
+              31.13
+            ],
+            [
+              77.30000000000001,
+              31.13
+            ],
+            [
+              77.30000000000001,
+              31.2
+            ],
+            [
+              77.23,
+              31.2
+            ],
+            [
+              77.23,
+              31.13
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_06",
+        "village_name": "Rampur Bushahr",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 27000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.03,
+              31.23
+            ],
+            [
+              77.10000000000001,
+              31.23
+            ],
+            [
+              77.10000000000001,
+              31.3
+            ],
+            [
+              77.03,
+              31.3
+            ],
+            [
+              77.03,
+              31.23
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_07",
+        "village_name": "Rohru",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 29500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.13,
+              31.23
+            ],
+            [
+              77.2,
+              31.23
+            ],
+            [
+              77.2,
+              31.3
+            ],
+            [
+              77.13,
+              31.3
+            ],
+            [
+              77.13,
+              31.23
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_08",
+        "village_name": "Kotkhai",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 32000,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              77.23,
+              31.23
+            ],
+            [
+              77.30000000000001,
+              31.23
+            ],
+            [
+              77.30000000000001,
+              31.3
+            ],
+            [
+              77.23,
+              31.3
+            ],
+            [
+              77.23,
+              31.23
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "village_id": "V_SHI_09",
+        "village_name": "Chopal",
+        "district": "Shimla & Kullu, Himachal Pradesh, India",
+        "state": "India",
+        "population": 34500,
+        "source": "Survey of India / OSM Administrative Boundary"
+      }
+    }
+  ]
+}
