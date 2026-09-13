@@ -8,6 +8,7 @@ router = APIRouter(prefix="/process", tags=["Processing Pipeline"])
 
 
 @router.post("")
+@router.post("/run")
 def execute_pipeline(aoi: str = Query(None)):
     """Executes the full spatial data-fusion pipeline for the requested or current AOI."""
     aoi_key = aoi or pipeline_state.current_aoi

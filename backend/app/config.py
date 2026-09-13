@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional
 import os
 import yaml
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
 
@@ -13,6 +14,9 @@ from pydantic import BaseModel, Field
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 CONFIG_DIR = BASE_DIR / "configs"
 DATA_DIR = BASE_DIR / "data"
+
+# Automatically load environment variables from .env if present
+load_dotenv(BASE_DIR / ".env")
 
 
 class BoundingBox(BaseModel):
