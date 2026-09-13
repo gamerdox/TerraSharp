@@ -158,12 +158,21 @@ export const App: React.FC = () => {
   // Map Click -> Explainable Point Risk & Live Prediction Pin
   const handleMapClick = async (lat: number, lon: number) => {
     handlePinLocation(lat, lon);
-    try {
-      const pt = await fetchPointRisk(lat, lon);
-      setSelectedPoint(pt);
-      setSelectedVillage(null);
-    } catch (err) {
-      console.warn("Click outside grid bounds or query error:", err);
+    const activeAoiObj = aois.find((a) => a.id === currentAoi);
+    if (activeAoiObj) {
+      const { min_lon, min_lat, max_lon, max_lat } = activeAoiObj.bbox;
+      if (lat >= min_lat && lat <= max_lat && lon >= min_lon && lon <= max_lon) {
+        try {
+          const pt = await fetchPointRisk(lat, lon);
+          setSelectedPoint(pt);
+          setSelectedVillage(null);
+        } catch (err) {
+          console.warn("Grid point query error:", err);
+        }
+      } else {
+        setSelectedPoint(null);
+        setSelectedVillage(null);
+      }
     }
   };
 

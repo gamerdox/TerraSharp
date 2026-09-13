@@ -90,9 +90,6 @@ export const MapViewer: React.FC<MapViewerProps> = ({
 
       map.on("click", (e: L.LeafletMouseEvent) => {
         onMapClick(e.latlng.lat, e.latlng.lng);
-        if (onPinLocation) {
-          onPinLocation(e.latlng.lat, e.latlng.lng);
-        }
       });
 
       mapInstanceRef.current = map;

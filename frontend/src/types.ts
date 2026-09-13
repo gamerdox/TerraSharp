@@ -1,7 +1,7 @@
 export type RiskLevel = "LOW" | "MODERATE" | "HIGH" | "VERY_HIGH";
 export type AlertState = "NORMAL" | "WATCH" | "WARNING" | "CRITICAL";
 export type HazardType = "LANDSLIDE" | "FLASH_FLOOD" | "MULTI_HAZARD";
-export type ProvenanceTag = "OBSERVED" | "DERIVED" | "PROXY" | "MODELLED" | "ESTIMATED" | "DEMO";
+export type ProvenanceTag = "OBSERVED" | "DERIVED" | "PROXY" | "MODELLED" | "ESTIMATED" | "DEMO" | "SYNTHETIC";
 
 export interface AOIInfo {
   id: string;

@@ -11,6 +11,7 @@ class ProvenanceTag(str, Enum):
     MODELLED = "MODELLED"        # Output of empirical/weighted risk index formula
     ESTIMATED = "ESTIMATED"      # Projected forward in time under dynamic trend (e.g. Lead Time)
     DEMO = "DEMO"                # Deterministic synthetic or cached historical scenario
+    SYNTHETIC = "SYNTHETIC"      # Procedurally generated or fallback proxy data
 
 
 class RiskLevel(str, Enum):
