@@ -25,6 +25,8 @@ flowchart TD
 | Document | File Path | Focus Area | Target Audience |
 |---|---|---|---|
 | **Master System Manual** | [`PROJECT_DOCUMENTATION.md`](../PROJECT_DOCUMENTATION.md) | Complete self-contained project manual (Architecture, Formulas, Live Engine, API, Benchmarks). | All engineers, evaluators, auditors |
+| **Models & Datasets Catalog** | [`MODELS_AND_DATASETS_CATALOG.md`](MODELS_AND_DATASETS_CATALOG.md) | Full technical catalog of models, selection rationales, datasets, units, formulas, and Excel companion. | Disaster managers, engineers, reviewers |
+| **Excel Models & Datasets Sheet** | [`TerraSharp_Models_and_Datasets.xlsx`](../TerraSharp_Models_and_Datasets.xlsx) | Multi-sheet styled Excel spreadsheet with all models, datasets, formulas, and benchmarks. | Evaluators, managers, analysts |
 | **System Overview & Quickstart** | [`README.md`](../README.md) | High-level introduction, key features, quickstart commands, and provenance disclosures. | General developers, evaluators |
 | **System Architecture** | [`ARCHITECTURE.md`](ARCHITECTURE.md) | Data-fusion pipeline diagrams, spatial normalization, multi-provider failover, and module map. | System architects, backend engineers |
 | **Mathematical & Physical Metrics** | [`METRICS_AND_PHYSICAL_MODELS.md`](METRICS_AND_PHYSICAL_MODELS.md) | Horn (1981) slope, D8 flow routing, 15-day AMI, Caine (1980) lead-time, false-alarm mitigation gate. | Data scientists, geologists, hydrologists |
