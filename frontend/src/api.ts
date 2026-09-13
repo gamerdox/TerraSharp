@@ -104,3 +104,15 @@ export async function createAoiFromPin(lat: number, lon: number, name?: string):
   if (!res.ok) throw new Error(`Failed to generate AOI grid: ${res.statusText}`);
   return res.json();
 }
+
+export async function fetchGlcEvents(): Promise<any[]> {
+  try {
+    const res = await fetch(`${API_BASE}/ingest/history`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.events || [];
+  } catch {
+    return [];
+  }
+}
+

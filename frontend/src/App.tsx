@@ -24,6 +24,7 @@ import {
   fetchVillages,
   fetchVillagesGeoJSON,
   fetchBacktest,
+  fetchGlcEvents,
 } from "./api";
 
 import { Header } from "./components/Header";
@@ -95,13 +96,14 @@ export const App: React.FC = () => {
   // Refresh all dashboard metrics from backend
   const refreshAllData = async () => {
     try {
-      const [gridData, vSummaries, vGeo, lt, alertList, bt] = await Promise.all([
+      const [gridData, vSummaries, vGeo, lt, alertList, bt, glcList] = await Promise.all([
         fetchRiskGrid(),
         fetchVillages(),
         fetchVillagesGeoJSON(),
         fetchLeadTime(),
         fetchAlerts(),
         fetchBacktest(),
+        fetchGlcEvents(),
       ]);
 
       setCells(gridData.cells || []);
@@ -110,17 +112,7 @@ export const App: React.FC = () => {
       setLeadTime(lt);
       setAlerts(alertList);
       setBacktestData(bt);
-
-      // Extract GLC markers from backtest or demo GeoJSON
-      if (vGeo && vGeo.features) {
-        // Sample markers for overlay
-        setGlcEvents([
-          { coordinates: [76.12, 11.52], properties: { date: "2018-08-14", location: "Puthumala", fatalities: 17, trigger: "Monsoon deluge" } },
-          { coordinates: [76.14, 11.54], properties: { date: "2019-08-08", location: "Puthumala Ridge", fatalities: 12, trigger: "Heavy rain" } },
-          { coordinates: [76.17, 11.50], properties: { date: "2024-07-30", location: "Mundakkai - Chooralmala", fatalities: 350, trigger: "Extreme cloudburst" } },
-          { coordinates: [79.56, 30.55], properties: { date: "2021-02-07", location: "Raini / Tapovan", fatalities: 204, trigger: "Rock/Ice avalanche + Torrential runoff" } },
-        ]);
-      }
+      setGlcEvents(glcList || []);
     } catch (err: any) {
       console.error(err);
       setErrorMsg(err.message || "Error fetching hazard layers.");

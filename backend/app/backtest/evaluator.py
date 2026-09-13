@@ -52,7 +52,9 @@ class BacktestEvaluator:
         # 2. Control sample extraction (Non-event locations: flat valley and non-susceptible cells)
         np.random.seed(42)
         control_cells = []
-        flat_indices = np.argwhere(slope_norm_grid < 0.20)
+        flat_indices = np.argwhere(slope_norm_grid < 0.05)
+        if len(flat_indices) < len(event_cells) * 2:
+            flat_indices = np.argwhere(slope_norm_grid < 0.15)
 
         if len(flat_indices) >= len(event_cells) * 2:
             sampled_idx = np.random.choice(len(flat_indices), size=len(event_cells) * 3, replace=False)

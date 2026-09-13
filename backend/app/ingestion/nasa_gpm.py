@@ -1,7 +1,7 @@
 """
-NASA GPM IMERG Ingestion Module.
-Supports live retrieval via earthaccess for GPM_3IMERGDF v07 (Final Daily),
-with clean, transparent fallback to deterministic demo datasets.
+Rainfall Ingestion Module.
+Supports live retrieval via Open-Meteo forecast API (free, global, keyless),
+with fallback to NASA GPM IMERG via earthaccess, and deterministic demo datasets.
 """
 import json
 import logging
@@ -31,16 +31,67 @@ class IMERGIngestionClient:
     ) -> Dict[str, Any]:
         """
         Retrieves rainfall raster series for the given AOI.
-        If live mode is requested and credentials are valid, queries Earthdata.
-        Otherwise loads deterministic demo datasets with explicit DEMO provenance tag.
+        Priority: Live Open-Meteo → NASA Earthdata → Demo data
         """
+        # 1. Try live Open-Meteo (free, keyless, global)
+        if self.mode == "live":
+            try:
+                return self._fetch_openmeteo_live(aoi_key)
+            except Exception as e:
+                logger.warning(f"Live Open-Meteo rainfall failed: {e}. Trying alternatives...")
+
+        # 2. Check for cached live data
+        live_series = settings.data_live_dir / f"aoi_{aoi_key}" / "rainfall_series.json"
+        if live_series.exists():
+            return self._load_series_json(live_series, aoi_key, is_live=True)
+
+        # 3. Try NASA Earthdata (if credentials available)
         if self.mode == "live" and self.username and self.password:
             try:
                 return self._fetch_earthdata_live(aoi_key, start_date, end_date)
             except Exception as e:
-                logger.warning(f"Live Earthdata ingestion failed: {e}. Falling back to demo data.")
+                logger.warning(f"NASA Earthdata ingestion failed: {e}. Falling back to demo data.")
 
+        # 4. Final fallback: demo data
         return self._fetch_demo_data(aoi_key)
+
+    def _fetch_openmeteo_live(self, aoi_key: str) -> Dict[str, Any]:
+        """Fetches real rainfall grid from Open-Meteo forecast API."""
+        from backend.app.ingestion.live_grid_fetcher import generate_live_rainfall
+
+        aoi_cfg = settings.get_aoi_config(aoi_key)
+        output_dir = settings.data_live_dir / f"aoi_{aoi_key}"
+
+        series_file = generate_live_rainfall(
+            aoi_key=aoi_key,
+            name=aoi_cfg.name,
+            min_lon=aoi_cfg.bbox.min_lon,
+            min_lat=aoi_cfg.bbox.min_lat,
+            max_lon=aoi_cfg.bbox.max_lon,
+            max_lat=aoi_cfg.bbox.max_lat,
+            output_dir=output_dir,
+            cache_hours=settings.live_rainfall_cache_hours,
+        )
+
+        return self._load_series_json(series_file, aoi_key, is_live=True)
+
+    def _load_series_json(self, series_file: Path, aoi_key: str, is_live: bool = False) -> Dict[str, Any]:
+        """Loads a rainfall_series.json file and resolves raster paths."""
+        with open(series_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        parent_dir = series_file.parent
+        for item in data.get("daily_series", []):
+            item["raster_path"] = str(parent_dir / item["raster_file"])
+
+        if is_live:
+            data["provenance"] = ProvenanceTag.OBSERVED.value
+            data["data_source_url"] = "https://open-meteo.com/ (ERA5/ECMWF Real-Time Precipitation)"
+        else:
+            data.setdefault("provenance", ProvenanceTag.DEMO.value)
+
+        data["ingested_at"] = datetime.now(timezone.utc).isoformat()
+        return data
 
     def _fetch_demo_data(self, aoi_key: str) -> Dict[str, Any]:
         demo_dir = settings.data_demo_dir / f"aoi_{aoi_key}"
@@ -49,17 +100,7 @@ class IMERGIngestionClient:
         if not series_file.exists():
             raise FileNotFoundError(f"Demo rainfall series not found at {series_file}")
 
-        with open(series_file, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        # Resolve full raster filepaths
-        for item in data.get("daily_series", []):
-            item["raster_path"] = str(demo_dir / item["raster_file"])
-
-        data["provenance"] = ProvenanceTag.DEMO.value
-        data["data_source_url"] = "https://earthdata.nasa.gov/dashboard/data-catalog/GPM_3IMERGDF.v07 (Demo Fallback)"
-        data["ingested_at"] = datetime.now(timezone.utc).isoformat()
-        return data
+        return self._load_series_json(series_file, aoi_key, is_live=False)
 
     def _fetch_earthdata_live(
         self,
@@ -68,7 +109,7 @@ class IMERGIngestionClient:
         end_date: Optional[str],
     ) -> Dict[str, Any]:
         """
-        Live Earthdata retrieval using earthaccess.
+        Live Earthdata retrieval using earthaccess (NASA GPM IMERG).
         """
         import earthaccess
 

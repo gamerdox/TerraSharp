@@ -73,3 +73,19 @@ def ingest_history(aoi: str = Query(None)):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/history")
+def get_history_events():
+    """Returns historical landslide events for current active AOI."""
+    if pipeline_state.glc_data is None:
+        client = GLCIngestionClient()
+        try:
+            pipeline_state.glc_data = client.get_historical_landslides(pipeline_state.current_aoi)
+        except Exception:
+            return {"aoi": pipeline_state.current_aoi, "events": []}
+    return {
+        "aoi": pipeline_state.current_aoi,
+        "events": pipeline_state.glc_data.get("events", []) if pipeline_state.glc_data else [],
+    }
+

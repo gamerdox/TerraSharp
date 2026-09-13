@@ -43,7 +43,7 @@ class Settings:
         self.debug: bool = os.getenv("DEBUG", "true").lower() == "true"
         self.port: int = int(os.getenv("PORT", "8000"))
         self.host: str = os.getenv("HOST", "0.0.0.0")
-        self.mode: str = os.getenv("MODE", "demo").lower()  # 'demo' or 'live'
+        self.mode: str = os.getenv("MODE", "live").lower()  # 'live' or 'demo'
         self.earthdata_username: str = os.getenv("EARTHDATA_USERNAME", "")
         self.earthdata_password: str = os.getenv("EARTHDATA_PASSWORD", "")
         self.default_aoi: str = os.getenv("DEFAULT_AOI", "wayanad")
@@ -53,6 +53,11 @@ class Settings:
         self.data_processed_dir: Path = BASE_DIR / os.getenv("DATA_PROCESSED_DIR", "data/processed")
         self.data_cache_dir: Path = BASE_DIR / os.getenv("DATA_CACHE_DIR", "data/cache")
         self.data_demo_dir: Path = BASE_DIR / os.getenv("DATA_DEMO_DIR", "data/demo")
+        self.data_live_dir: Path = BASE_DIR / os.getenv("DATA_LIVE_DIR", "data/live")
+
+        # Cache durations for live API-fetched data
+        self.live_dem_cache_hours: float = float(os.getenv("LIVE_DEM_CACHE_HOURS", "24.0"))
+        self.live_rainfall_cache_hours: float = float(os.getenv("LIVE_RAINFALL_CACHE_HOURS", "6.0"))
 
         self.config_version: str = os.getenv("CONFIG_VERSION", "1.0.0")
         self.model_version: str = os.getenv("MODEL_VERSION", "1.0.0")

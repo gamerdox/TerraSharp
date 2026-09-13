@@ -24,8 +24,9 @@ class GLCIngestionClient:
         """
         Retrieves historical landslide events within the AOI.
         """
-        demo_dir = settings.data_demo_dir / f"aoi_{aoi_key}"
-        glc_file = demo_dir / "glc_events.geojson"
+        live_file = settings.data_live_dir / f"aoi_{aoi_key}" / "glc_events.geojson"
+        demo_file = settings.data_demo_dir / f"aoi_{aoi_key}" / "glc_events.geojson"
+        glc_file = live_file if live_file.exists() else demo_file
 
         if not glc_file.exists():
             raise FileNotFoundError(f"GLC events file not found at {glc_file}")

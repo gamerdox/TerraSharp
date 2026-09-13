@@ -22,8 +22,9 @@ class BoundaryIngestionClient:
         """
         Retrieves village boundaries as a GeoDataFrame and metadata.
         """
-        demo_dir = settings.data_demo_dir / f"aoi_{aoi_key}"
-        villages_file = demo_dir / "villages.geojson"
+        live_file = settings.data_live_dir / f"aoi_{aoi_key}" / "villages.geojson"
+        demo_file = settings.data_demo_dir / f"aoi_{aoi_key}" / "villages.geojson"
+        villages_file = live_file if live_file.exists() else demo_file
 
         if not villages_file.exists():
             raise FileNotFoundError(f"Village boundaries GeoJSON not found at {villages_file}")
@@ -56,6 +57,7 @@ class BoundaryIngestionClient:
         }
 
     def load_geodataframe(self, aoi_key: str) -> gpd.GeoDataFrame:
-        demo_dir = settings.data_demo_dir / f"aoi_{aoi_key}"
-        villages_file = demo_dir / "villages.geojson"
+        live_file = settings.data_live_dir / f"aoi_{aoi_key}" / "villages.geojson"
+        demo_file = settings.data_demo_dir / f"aoi_{aoi_key}" / "villages.geojson"
+        villages_file = live_file if live_file.exists() else demo_file
         return gpd.read_file(villages_file)
