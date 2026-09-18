@@ -32,9 +32,13 @@ class BoundaryIngestionClient:
         gdf = gpd.read_file(villages_file)
 
         villages_list: List[Dict[str, Any]] = []
+        has_simulated = False
         for _, row in gdf.iterrows():
             geom = row.geometry
             centroid = geom.centroid
+            row_prov = row.get("provenance", "")
+            if row_prov == "SIMULATED":
+                has_simulated = True
             villages_list.append({
                 "village_id": row.get("village_id", f"V_{_}"),
                 "village_name": row.get("village_name", f"Village {_}"),
@@ -44,15 +48,18 @@ class BoundaryIngestionClient:
                 "bounds": [geom.bounds[0], geom.bounds[1], geom.bounds[2], geom.bounds[3]],
                 "center": {"lon": float(centroid.x), "lat": float(centroid.y)},
                 "source": row.get("source", "Administrative Boundaries"),
+                "provenance": row_prov or ProvenanceTag.OBSERVED.value,
             })
+
+        overall_prov = ProvenanceTag.SIMULATED.value if has_simulated else ProvenanceTag.OBSERVED.value
 
         return {
             "aoi": aoi_key,
             "count": len(villages_list),
             "villages": villages_list,
             "geojson_path": str(villages_file),
-            "provenance": ProvenanceTag.OBSERVED.value,
-            "data_source_url": "Authoritative Open Administrative Boundaries / Survey of India",
+            "provenance": overall_prov,
+            "data_source_url": "Authoritative Open Administrative Boundaries / OSM" if not has_simulated else "Synthetic Analysis Zones",
             "ingested_at": datetime.now(timezone.utc).isoformat(),
         }
 

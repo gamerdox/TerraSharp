@@ -1,7 +1,9 @@
 export type RiskLevel = "LOW" | "MODERATE" | "HIGH" | "VERY_HIGH";
-export type AlertState = "NORMAL" | "WATCH" | "WARNING" | "CRITICAL";
+export type AlertState = "NORMAL" | "WATCH" | "WARNING" | "CRITICAL" | "RECOVERY";
 export type HazardType = "LANDSLIDE" | "FLASH_FLOOD" | "MULTI_HAZARD";
-export type ProvenanceTag = "OBSERVED" | "DERIVED" | "PROXY" | "MODELLED" | "ESTIMATED" | "DEMO" | "SYNTHETIC";
+export type ProvenanceTag = "OBSERVED" | "DERIVED" | "PROXY" | "MODELLED" | "ESTIMATED" | "DEMO" | "SYNTHETIC" | "SIMULATED" | "CACHED" | "UNAVAILABLE" | "ERROR";
+export type EmailStatus = "SENT" | "FAILED" | "QUEUED" | "SIMULATED" | "RETRYING" | "SUPPRESSED_COOLDOWN";
+export type DataFreshnessStatus = "LIVE" | "CACHED" | "STALE" | "UNAVAILABLE" | "ERROR";
 
 export interface AOIInfo {
   id: string;
@@ -91,6 +93,57 @@ export interface AlertItem {
   simulated: boolean;
   timestamp: string;
   data_provenance: Record<string, ProvenanceTag>;
+  email_status?: EmailStatus;
+  trigger_reason?: string;
+  data_freshness?: string;
+}
+
+export interface AlertTransitionItem {
+  transition_id: string;
+  village_id: string;
+  location_name: string;
+  from_state: AlertState;
+  to_state: AlertState;
+  risk_score: number;
+  hazard_type: HazardType;
+  trigger_reason: string;
+  timestamp: string;
+  email_status: EmailStatus;
+  recipients_count: number;
+  data_freshness: string;
+}
+
+export interface EmailDispatchRecord {
+  dispatch_id: string;
+  alert_id: string;
+  village_name: string;
+  severity: AlertState;
+  hazard_type: HazardType;
+  recipient: string;
+  subject: string;
+  status: EmailStatus;
+  timestamp: string;
+  error_message?: string | null;
+  retry_count: number;
+  simulated: boolean;
+}
+
+export interface DataHealthItem {
+  layer_name: string;
+  status: DataFreshnessStatus;
+  source_url: string;
+  last_updated?: string | null;
+  freshness_minutes?: number | null;
+  provenance: ProvenanceTag;
+  records_or_cells: number;
+  message: string;
+}
+
+export interface DataHealthResponse {
+  overall_status: DataFreshnessStatus;
+  evaluated_at: string;
+  active_aoi: string;
+  layers: Record<string, DataHealthItem>;
 }
 
 export interface VillageRiskSummary {
@@ -168,6 +221,8 @@ export interface PinPointLiveResult {
   longitude: number;
   elevation_m: number;
   slope_deg: number;
+  slope_pct?: number;
+  slope_norm?: number;
   aspect_deg: number;
   rainfall_24h_mm: number;
   rainfall_3d_mm: number;
@@ -190,3 +245,48 @@ export interface PinPointLiveResult {
     fetched_at: string;
   };
 }
+
+export interface DangerzoneMonitorRequest {
+  email: string;
+  lat: number;
+  lon: number;
+  location_name?: string;
+  force_dispatch?: boolean;
+}
+
+export interface DangerzoneMonitorResponse {
+  email: string;
+  latitude: number;
+  longitude: number;
+  location_name: string;
+  zone: "RED" | "YELLOW" | "GREEN";
+  zone_title: string;
+  hazard_level: string;
+  peak_risk: number;
+  landslide_risk: number;
+  flash_flood_risk: number;
+  slope_deg: number;
+  slope_pct: number;
+  elevation_m: number;
+  rainfall_24h_mm: number;
+  rainfall_15d_mm: number;
+  soil_saturation_pct: number;
+  caine_intensity_ratio: number;
+  false_alarm_suppressed: boolean;
+  email_dispatched: boolean;
+  email_status: string;
+  dispatch_reason: string;
+  evaluated_at: string;
+  smtp_configured: boolean;
+}
+
+export interface SMTPStatus {
+  configured: boolean;
+  smtp_host: string | null;
+  smtp_port: number;
+  smtp_from: string | null;
+  smtp_use_tls: boolean;
+  mode: string;
+  notice: string;
+}
+

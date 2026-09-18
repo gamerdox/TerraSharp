@@ -11,6 +11,12 @@ import {
   BacktestComparison,
   SystemHealth,
   PinPointLiveResult,
+  AlertTransitionItem,
+  EmailDispatchRecord,
+  DataHealthResponse,
+  DangerzoneMonitorRequest,
+  DangerzoneMonitorResponse,
+  SMTPStatus,
 } from "./types";
 
 const API_BASE = "http://127.0.0.1:8000";
@@ -115,4 +121,64 @@ export async function fetchGlcEvents(): Promise<any[]> {
     return [];
   }
 }
+
+export async function fetchAlertHistory(limit = 50): Promise<AlertTransitionItem[]> {
+  const res = await fetch(`${API_BASE}/alerts/history?limit=${limit}`);
+  if (!res.ok) throw new Error(`Failed to fetch alert history: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchEmailLogs(limit = 50): Promise<EmailDispatchRecord[]> {
+  const res = await fetch(`${API_BASE}/alerts/emails?limit=${limit}`);
+  if (!res.ok) throw new Error(`Failed to fetch email logs: ${res.statusText}`);
+  return res.json();
+}
+
+export async function sendTestEmail(params: {
+  recipient_email?: string;
+  severity?: string;
+  village_name?: string;
+}): Promise<{ status: string; message: string; dispatch_record?: EmailDispatchRecord }> {
+  const res = await fetch(`${API_BASE}/alerts/test-email`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) throw new Error(`Failed to send test email: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchDataHealth(aoi?: string): Promise<DataHealthResponse> {
+  const url = aoi ? `${API_BASE}/health/data?aoi=${encodeURIComponent(aoi)}` : `${API_BASE}/health/data`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch data health: ${res.statusText}`);
+  return res.json();
+}
+
+export async function monitorDangerzone(req: DangerzoneMonitorRequest): Promise<DangerzoneMonitorResponse> {
+  const res = await fetch(`${API_BASE}/alerts/monitor-zone`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(req),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new Error(err.detail || "Dangerzone monitoring failed");
+  }
+  return res.json();
+}
+
+export async function fetchSmtpStatus(): Promise<SMTPStatus> {
+  const res = await fetch(`${API_BASE}/alerts/smtp-status`);
+  if (!res.ok) throw new Error(`Failed to fetch SMTP status: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchDangerzoneActivity(): Promise<DangerzoneMonitorResponse[]> {
+  const res = await fetch(`${API_BASE}/alerts/monitor-zone/activity`);
+  if (!res.ok) throw new Error(`Failed to fetch activity: ${res.statusText}`);
+  return res.json();
+}
+
+
 

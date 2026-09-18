@@ -4,7 +4,14 @@ Pydantic schemas for API inputs and outputs.
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
 from datetime import datetime
-from backend.app.models.domain import RiskLevel, AlertState, HazardType, ProvenanceTag
+from backend.app.models.domain import (
+    RiskLevel,
+    AlertState,
+    HazardType,
+    ProvenanceTag,
+    EmailStatus,
+    DataFreshnessStatus,
+)
 
 
 class HealthResponse(BaseModel):
@@ -111,9 +118,74 @@ class AlertItem(BaseModel):
     confidence_score: float  # 0.0 - 1.0 based on data completeness
     contributing_factors: ContributingFactors
     recommended_action: str
-    simulated: bool = True  # strictly simulated in MVP
+    simulated: bool = False
     timestamp: datetime
     data_provenance: Dict[str, ProvenanceTag]
+    email_status: Optional[EmailStatus] = None
+    trigger_reason: Optional[str] = None
+    persistence_count: Optional[int] = 1
+    data_freshness: Optional[str] = "FRESH"
+
+
+class AlertTransitionItem(BaseModel):
+    transition_id: str
+    village_id: str
+    location_name: str
+    from_state: AlertState
+    to_state: AlertState
+    risk_score: float
+    hazard_type: HazardType
+    trigger_reason: str
+    timestamp: datetime
+    email_status: EmailStatus
+    recipients_count: int
+    data_freshness: str
+
+
+class EmailDispatchRecord(BaseModel):
+    dispatch_id: str
+    alert_id: str
+    village_name: str
+    severity: AlertState
+    hazard_type: HazardType
+    recipient: str
+    subject: str
+    status: EmailStatus
+    timestamp: datetime
+    error_message: Optional[str] = None
+    retry_count: int = 0
+    simulated: bool = False
+
+
+class TestEmailRequest(BaseModel):
+    recipient_email: Optional[str] = None
+    severity: AlertState = AlertState.WARNING
+    village_name: str = "Wayanad Sector 4"
+
+
+class TestEmailResponse(BaseModel):
+    status: EmailStatus
+    message: str
+    dispatch_record: Optional[EmailDispatchRecord] = None
+
+
+class DataHealthItem(BaseModel):
+    layer_name: str
+    status: DataFreshnessStatus
+    source_url: str
+    last_updated: Optional[datetime] = None
+    freshness_minutes: Optional[float] = None
+    provenance: ProvenanceTag
+    records_or_cells: int = 0
+    message: str
+
+
+class DataHealthResponse(BaseModel):
+    overall_status: DataFreshnessStatus
+    evaluated_at: datetime
+    active_aoi: str
+    layers: Dict[str, DataHealthItem]
+
 
 
 class VillageRiskSummary(BaseModel):
@@ -183,6 +255,8 @@ class PinPointLiveResponse(BaseModel):
     longitude: float
     elevation_m: float
     slope_deg: float
+    slope_pct: Optional[float] = None
+    slope_norm: Optional[float] = None
     aspect_deg: float
     rainfall_24h_mm: float
     rainfall_3d_mm: float

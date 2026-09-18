@@ -84,9 +84,10 @@ def get_point_risk(lat: float = Query(...), lon: float = Query(...)):
         # Coordinate is outside current pre-computed grid - evaluate dynamically via live point fetcher
         live_res = live_point_fetcher.evaluate_live_pinpoint(lat, lon)
         scorer = LandslideRiskScorer(settings.risk_weights)
+        slope_normalized = live_res.get("slope_norm", min(1.0, max(0.0, live_res["slope_deg"] / 55.0)))
         factors = scorer.explain_point_risk(
             rainfall_val=min(1.0, live_res["rainfall_24h_mm"] / 200.0),
-            slope_val=min(1.0, max(0.0, (live_res["slope_deg"] - 15.0) / 30.0)),
+            slope_val=slope_normalized,
             soil_val=live_res["soil_saturation_proxy"],
             history_val=0.10,
         )

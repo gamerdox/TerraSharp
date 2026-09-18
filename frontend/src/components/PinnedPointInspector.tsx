@@ -362,7 +362,7 @@ export const PinnedPointInspector: React.FC<Props> = ({
               <div>
                 <span style={{ color: "#94a3b8" }}>Slope:</span>{" "}
                 <strong style={{ fontFamily: "monospace", color: data.slope_deg >= 25 ? "#f97316" : "#f8fafc" }}>
-                  {data.slope_deg}°
+                  {data.slope_deg}° {data.slope_pct ? `(${data.slope_pct}%)` : ""}
                 </strong>
               </div>
               <div>

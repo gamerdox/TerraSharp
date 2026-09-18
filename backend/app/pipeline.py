@@ -182,8 +182,8 @@ class PipelineOrchestrator:
                 history_val=float(glc_density_norm[c_row, c_col]),
             )
 
-            # Generate alert item
-            alert = self.alert_engine.generate_village_alert(
+            # Generate alert item with stateful hysteresis and persistence
+            alert = self.alert_engine.evaluate_village(
                 village_id=v_sum.village_id,
                 village_name=v_sum.name,
                 coordinates=v_c,
@@ -192,6 +192,7 @@ class PipelineOrchestrator:
                 factors=factors,
                 lead_time_hours=lead_time.estimated_lead_time_hours,
                 data_completeness=1.0,
+                data_freshness="FRESH",
             )
             alerts.append(alert)
 

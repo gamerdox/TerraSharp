@@ -211,7 +211,8 @@ def _generate_glc_events(glc_file, aoi_key, name, center):
                 "landslide_size": "Large",
                 "fatalities": 8,
                 "confidence": "HIGH",
-                "source": "NASA Global Landslide Catalog",
+                "source": "SYNTHETIC_TEST_FIXTURE (PROCEDURAL)",
+                "provenance": "SIMULATED",
             },
         },
         {
@@ -226,7 +227,8 @@ def _generate_glc_events(glc_file, aoi_key, name, center):
                 "landslide_size": "Medium",
                 "fatalities": 2,
                 "confidence": "HIGH",
-                "source": "NASA Global Landslide Catalog",
+                "source": "SYNTHETIC_TEST_FIXTURE (PROCEDURAL)",
+                "provenance": "SIMULATED",
             },
         },
         {
@@ -237,21 +239,22 @@ def _generate_glc_events(glc_file, aoi_key, name, center):
                 "date": "2024-07-29",
                 "location": f"{name} Upper Slope",
                 "trigger": "Orographic Deluge",
-                "landslide_category": "Catastrophic Debris Avalanche",
+                "landslide_category": "Debris Avalanche",
                 "landslide_size": "Very Large",
                 "fatalities": 45,
-                "confidence": "VERY_HIGH",
-                "source": "NASA Global Landslide Catalog / GSI",
+                "confidence": "HIGH",
+                "source": "SYNTHETIC_TEST_FIXTURE (PROCEDURAL)",
+                "provenance": "SIMULATED",
             },
         },
     ]
     with open(glc_file, "w", encoding="utf-8") as f:
         json.dump({"type": "FeatureCollection", "features": glc_features}, f, indent=2)
-    logger.info(f"Generated GLC events for {aoi_key}")
+    logger.info(f"Generated procedural test fixtures for {aoi_key} (Provenance: SIMULATED)")
 
 
 def _generate_village_boundaries(villages_file, aoi_key, name, min_lon, min_lat, max_lon, max_lat, settlement_names):
-    """Generates village polygon boundaries for the AOI."""
+    """Generates synthetic analysis zone polygon boundaries for custom pin AOI."""
     default_names = settlement_names or [
         f"{name} North", f"{name} Central", f"{name} Valley",
         f"{name} Upper Ridge", f"{name} Hills", f"{name} South",
@@ -282,7 +285,8 @@ def _generate_village_boundaries(villages_file, aoi_key, name, min_lon, min_lat,
                     "district": name,
                     "state": "India",
                     "population": 12000 + idx * 2500,
-                    "source": "Survey of India / OSM Administrative Boundary",
+                    "source": "SYNTHETIC_ANALYSIS_ZONES (PROCEDURAL)",
+                    "provenance": "SIMULATED",
                 },
             })
             idx += 1

@@ -9,7 +9,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.config import settings
-from backend.app.models.schemas import HealthResponse
+from backend.app.models.schemas import HealthResponse, DataHealthResponse
+from backend.app.ingestion.data_health import data_health_service
 from backend.app.pipeline import pipeline_state, PipelineOrchestrator
 from backend.app.api.routes_aoi import router as aoi_router
 from backend.app.api.routes_ingest import router as ingest_router
@@ -91,6 +92,16 @@ def health_check():
             "last_processed": pipeline_state.last_processed.isoformat() if pipeline_state.last_processed else None,
         },
     )
+
+
+@app.get("/health/data", response_model=DataHealthResponse, tags=["System"])
+def data_health_check(aoi: str = None):
+    """
+    Granular data source health, provenance, and freshness audit.
+    Reports LIVE, CACHED, STALE, UNAVAILABLE, or ERROR for every ingestion layer.
+    """
+    target_aoi = aoi or pipeline_state.current_aoi or "wayanad"
+    return data_health_service.evaluate_health(target_aoi)
 
 
 @app.get("/", tags=["System"])

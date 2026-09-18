@@ -34,8 +34,12 @@ class GLCIngestionClient:
         gdf = gpd.read_file(glc_file)
 
         events: List[Dict[str, Any]] = []
+        has_simulated = False
         for _, row in gdf.iterrows():
             geom = row.geometry
+            row_prov = row.get("provenance", "")
+            if row_prov == "SIMULATED":
+                has_simulated = True
             events.append({
                 "event_id": row.get("event_id", "UNKNOWN"),
                 "date": str(row.get("date", "")),
@@ -46,19 +50,24 @@ class GLCIngestionClient:
                 "fatalities": int(row.get("fatalities", 0)),
                 "confidence": row.get("confidence", "MEDIUM"),
                 "source": row.get("source", "NASA Global Landslide Catalog"),
+                "provenance": row_prov or (ProvenanceTag.OBSERVED.value if self.mode != "demo" else ProvenanceTag.DEMO.value),
                 "coordinates": [geom.x, geom.y] if geom else [0.0, 0.0],
             })
+
+        overall_prov = ProvenanceTag.SIMULATED.value if has_simulated else (
+            ProvenanceTag.OBSERVED.value if self.mode != "demo" else ProvenanceTag.DEMO.value
+        )
 
         return {
             "aoi": aoi_key,
             "count": len(events),
             "events": events,
             "file_path": str(glc_file),
-            "provenance": ProvenanceTag.OBSERVED.value if self.mode != "demo" else ProvenanceTag.DEMO.value,
-            "data_source_url": "https://data.nasa.gov/dataset/global-landslide-catalog-export",
+            "provenance": overall_prov,
+            "data_source_url": "https://data.nasa.gov/dataset/global-landslide-catalog-export" if not has_simulated else "Local Test Fixture",
             "validation_references": [
                 "ISRO/NRSC Landslide Atlas of India (https://isro.gov.in/Landslide_Atlas_India.html)",
                 "GSI Bhusanket / National Landslide Forecasting Centre (https://bhusanket.gsi.gov.in/)",
-            ],
+            ] if not has_simulated else ["Synthetic Test Calibration"],
             "ingested_at": datetime.now(timezone.utc).isoformat(),
         }

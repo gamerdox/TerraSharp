@@ -37,84 +37,99 @@ class LivePointFetcher:
 
     def fetch_point_terrain(self, lat: float, lon: float) -> Dict[str, Any]:
         """
-        Samples a 3x3 coordinate stencil around (lat, lon) at 30m resolution.
-        Computes the Horn (1981) partial derivatives for slope in degrees and aspect.
+        Samples an adaptive 3x3 coordinate stencil around (lat, lon).
+        Uses a 90m primary baseline matching the native resolution of global SRTM/Copernicus DEM.
+        If local terrain elevations are identical (raster quantization), expands to 180m
+        to capture true macroscopic mountainside gradient.
+        Computes the Horn (1981) partial derivatives for slope in degrees, grade %, and aspect.
         Uses Open-Meteo with automatic failover to Open-Elevation.
         """
-        dlat = 30.0 / 111139.0
-        cos_lat = max(0.01, math.cos(math.radians(lat)))
-        dlon = 30.0 / (111139.0 * cos_lat)
+        for dist in [90.0, 180.0]:
+            dlat = dist / 111139.0
+            cos_lat = max(0.01, math.cos(math.radians(lat)))
+            dlon = dist / (111139.0 * cos_lat)
 
-        lats_arr = [
-            lat + dlat, lat + dlat, lat + dlat,
-            lat,        lat,        lat,
-            lat - dlat, lat - dlat, lat - dlat,
-        ]
-        lons_arr = [
-            lon - dlon, lon,        lon + dlon,
-            lon - dlon, lon,        lon + dlon,
-            lon - dlon, lon,        lon + dlon,
-        ]
+            lats_arr = [
+                lat + dlat, lat + dlat, lat + dlat,
+                lat,        lat,        lat,
+                lat - dlat, lat - dlat, lat - dlat,
+            ]
+            lons_arr = [
+                lon - dlon, lon,        lon + dlon,
+                lon - dlon, lon,        lon + dlon,
+                lon - dlon, lon,        lon + dlon,
+            ]
 
-        # 1. Primary: Open-Meteo Elevation
-        lats_str = ",".join(f"{lt:.6f}" for lt in lats_arr)
-        lons_str = ",".join(f"{ln:.6f}" for ln in lons_arr)
-        url = f"https://api.open-meteo.com/v1/elevation?latitude={lats_str}&longitude={lons_str}"
+            # 1. Primary: Open-Meteo Elevation
+            lats_str = ",".join(f"{lt:.6f}" for lt in lats_arr)
+            lons_str = ",".join(f"{ln:.6f}" for ln in lons_arr)
+            url = f"https://api.open-meteo.com/v1/elevation?latitude={lats_str}&longitude={lons_str}"
 
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "TerraSharp-SH304/1.0"})
-            with urllib.request.urlopen(req, timeout=self.timeout_sec) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                elevs = data.get("elevation", [])
+            elevs: Optional[List[float]] = None
+            source_name = "SRTM/Copernicus Global DEM via Open-Meteo"
 
-            if len(elevs) == 9:
-                return self._compute_horn_terrain(elevs, "SRTM/Copernicus 30m Global DEM via Open-Meteo")
-        except Exception as err:
-            logger.info(f"Open-Meteo terrain unavailable ({err}). Failing over to Open-Elevation...")
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "TerraSharp-SH304/1.0"})
+                with urllib.request.urlopen(req, timeout=self.timeout_sec) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    elevs = data.get("elevation", [])
+            except Exception as err:
+                logger.info(f"Open-Meteo terrain unavailable ({err}). Failing over to Open-Elevation...")
 
-        # 2. Secondary Failover: Open-Elevation API (Keyless, Global SRTM)
-        try:
-            locs = "|".join(f"{lt:.6f},{ln:.6f}" for lt, ln in zip(lats_arr, lons_arr))
-            oe_url = f"https://api.open-elevation.com/api/v1/lookup?locations={locs}"
-            req = urllib.request.Request(oe_url, headers={"User-Agent": "TerraSharp-SH304/1.0"})
-            with urllib.request.urlopen(req, timeout=self.timeout_sec) as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                results = data.get("results", [])
+            # 2. Secondary Failover: Open-Elevation API (Keyless, Global SRTM)
+            if not elevs or len(elevs) != 9:
+                try:
+                    locs = "|".join(f"{lt:.6f},{ln:.6f}" for lt, ln in zip(lats_arr, lons_arr))
+                    oe_url = f"https://api.open-elevation.com/api/v1/lookup?locations={locs}"
+                    req = urllib.request.Request(oe_url, headers={"User-Agent": "TerraSharp-SH304/1.0"})
+                    with urllib.request.urlopen(req, timeout=self.timeout_sec) as resp:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        results = data.get("results", [])
+                    if len(results) == 9:
+                        elevs = [r.get("elevation", 0.0) for r in results]
+                        source_name = "SRTM GL1 30m Global DEM via Open-Elevation"
+                except Exception as err:
+                    logger.warning(f"Open-Elevation failover failed: {err}. Using interpolated terrain.")
 
-            if len(results) == 9:
-                elevs = [r.get("elevation", 0.0) for r in results]
-                return self._compute_horn_terrain(elevs, "SRTM GL1 30m Global DEM via Open-Elevation")
-        except Exception as err:
-            logger.warning(f"Open-Elevation failover failed: {err}. Using interpolated terrain.")
+            if elevs and len(elevs) == 9:
+                clean_elevs = [float(e) if e is not None else 0.0 for e in elevs]
+                # If elevations are not all flat, or if we already tried 180m, compute terrain
+                if max(clean_elevs) != min(clean_elevs) or dist >= 180.0 or clean_elevs[4] < 50.0:
+                    return self._compute_horn_terrain(clean_elevs, source_name, dx=dist, dy=dist)
 
         # 3. Tertiary Fallback: Deterministic elevation estimate
         return {
             "elevation_m": 0.0 if abs(lat) < 0.1 else 250.0,
             "slope_deg": 2.0,
+            "slope_pct": 3.5,
             "aspect_deg": 0.0,
-            "slope_norm": 0.0,
+            "slope_norm": 2.0 / 55.0,
             "stencil_elevations": [0.0] * 9,
             "provenance": ProvenanceTag.ESTIMATED.value,
             "source": "Interpolated Topography Estimate",
         }
 
-    def _compute_horn_terrain(self, elevs: List[Any], source_name: str) -> Dict[str, Any]:
-        """Calculates Horn 1981 slope and aspect from 9 stencil elevations."""
+    def _compute_horn_terrain(
+        self, elevs: List[float], source_name: str, dx: float = 90.0, dy: float = 90.0
+    ) -> Dict[str, Any]:
+        """Calculates Horn 1981 slope, grade %, and aspect from 9 stencil elevations."""
         clean_elevs = [float(e) if e is not None else 0.0 for e in elevs]
         z1, z2, z3, z4, z5, z6, z7, z8, z9 = clean_elevs
-        dx, dy = 30.0, 30.0
 
         dz_dx = ((z3 + 2.0 * z6 + z9) - (z1 + 2.0 * z4 + z7)) / (8.0 * dx)
         dz_dy = ((z1 + 2.0 * z2 + z3) - (z7 + 2.0 * z8 + z9)) / (8.0 * dy)
 
         slope_rad = math.atan(math.sqrt(dz_dx**2 + dz_dy**2))
         slope_deg = math.degrees(slope_rad)
+        slope_pct = round(math.tan(slope_rad) * 100.0, 1)
         aspect_deg = (math.degrees(math.atan2(dz_dy, -dz_dx)) + 360.0) % 360.0
-        slope_norm = max(0.0, min(1.0, (slope_deg - 15.0) / 30.0))
+        # Continuous geomorphic hazard normalization: reaches maximum saturation at 55 deg
+        slope_norm = max(0.0, min(1.0, slope_deg / 55.0))
 
         return {
             "elevation_m": round(z5, 1),
             "slope_deg": round(slope_deg, 2),
+            "slope_pct": slope_pct,
             "aspect_deg": round(aspect_deg, 1),
             "slope_norm": round(slope_norm, 3),
             "stencil_elevations": [round(e, 1) for e in clean_elevs],
@@ -371,6 +386,8 @@ class LivePointFetcher:
             "longitude": round(lon, 5),
             "elevation_m": elevation_m,
             "slope_deg": slope_deg,
+            "slope_pct": terrain.get("slope_pct", round(math.tan(math.radians(slope_deg)) * 100.0, 1)),
+            "slope_norm": terrain.get("slope_norm", round(slope_deg / 55.0, 3)),
             "aspect_deg": terrain["aspect_deg"],
             "rainfall_24h_mm": r24,
             "rainfall_3d_mm": rainfall["rainfall_3d_mm"],

@@ -62,6 +62,24 @@ class Settings:
         self.config_version: str = os.getenv("CONFIG_VERSION", "1.0.0")
         self.model_version: str = os.getenv("MODEL_VERSION", "1.0.0")
 
+        # SMTP & Real Email Alert Dispatch Settings
+        self.smtp_host: str = os.getenv("SMTP_HOST", "")
+        self.smtp_port: int = int(os.getenv("SMTP_PORT", "587"))
+        self.smtp_user: str = os.getenv("SMTP_USER", "")
+        self.smtp_password: str = os.getenv("SMTP_PASSWORD", "")
+        self.smtp_from: str = os.getenv("SMTP_FROM", "alerts@terrasharp.org")
+        self.smtp_use_tls: bool = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
+        self.smtp_timeout_seconds: float = float(os.getenv("SMTP_TIMEOUT_SECONDS", "10.0"))
+        
+        # Recipients (comma-separated in .env)
+        raw_recipients = os.getenv("ALERT_RECIPIENT_EMAILS", "disaster-response@kerala.gov.in,district-collector@wayanad.nic.in")
+        self.alert_recipient_emails: list[str] = [e.strip() for e in raw_recipients.split(",") if e.strip()]
+
+        # Alert Engine Dynamics
+        self.alert_email_enabled: bool = os.getenv("ALERT_EMAIL_ENABLED", "true").lower() == "true"
+        self.alert_cooldown_seconds: float = float(os.getenv("ALERT_COOLDOWN_SECONDS", "1800.0"))  # 30 mins
+        self.alert_persistence_cycles: int = int(os.getenv("ALERT_PERSISTENCE_CYCLES", "1"))
+
         # Load YAML configs
         self.default_config: Dict[str, Any] = self._load_yaml(CONFIG_DIR / "default_config.yaml")
         self.risk_weights: Dict[str, Any] = self._load_yaml(CONFIG_DIR / "risk_weights.yaml")

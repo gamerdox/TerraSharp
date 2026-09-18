@@ -37,6 +37,7 @@ import { BacktestModal } from "./components/BacktestModal";
 import { ProvenancePanel } from "./components/ProvenancePanel";
 import { ExportReportModal } from "./components/ExportReportModal";
 import { PinnedPointInspector } from "./components/PinnedPointInspector";
+import { PersonalDangerzoneMonitor } from "./components/PersonalDangerzoneMonitor";
 
 export const App: React.FC = () => {
   // Application Data States
@@ -242,6 +243,12 @@ export const App: React.FC = () => {
         onOpenExport={() => setShowExportModal(true)}
         loading={loading}
         health={health}
+      />
+
+      {/* Personal Dangerzone Live Email Monitoring Bar */}
+      <PersonalDangerzoneMonitor
+        pinnedLocation={pinnedLocation}
+        pinnedPlaceName={pinnedPlaceName}
       />
 
       {/* Error banner if any */}
